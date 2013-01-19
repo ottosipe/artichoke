@@ -34,74 +34,52 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	// Create the JSON object to store all user data
 	var data = { "users": [] }
 
-	///////////////
-
-	everyone.now.syncPeers = function( cb ){
-		console.log('syncPeers() fired with', data.users.length, 'users already here.');
-		data.users.push(this.user.clientId);
-		console.log('callingback, there are now', data.users.length, 'users');
-		cb(data);
+	everyone.now.syncPeers = function( newClientId, connectFlag, cb ){
+		console.log('syncPeers() FIRED');
+		if(!connectFlag) {
+			// Update all the peers on disconnect
+			cb(data);
+		} else if(newClientId === this.user.clientId) {
+			if(connectFlag) {
+				console.log('syncPeers() fired with', data.users.length, 'users already here.\t', this.user.clientId);
+				data.users.push(this.user.clientId);
+				console.log('callingback, there are now', data.users.length, 'users\t\t', this.user.clientId);
+				cb(data);
+			}
+		}
 	};
 
-	///////////////
-
 	nowjs.on('connect', function(){
-		console.log('CONNECTION IP');
-		//console.log(nowjs.server.sockets);
-		console.log(this.user.socket);
-		/*console.log('client #', this.user.clientId, 'connected.');
-		//console.log('There are', window.users.length, 'connected.');
-
-		console.log(data);
-		data.users.push( { "name": this.user.clientId } );
-		console.log(data);
-		everyone.now.pushUpdate( this.user.clientId );*/
+		everyone.now.syncPeers(this.user.clientId, true, function(){
+			everyone.now.updateUserList(data);
+		});
 	});
 
 	nowjs.on('disconnect', function() {
-		console.log(data);
-		findAndRemove(data.users, 'name', this.user.clientId);
-		console.log(data);
-		//everyone.now.pushUpdate( this.user.clientId );
+		console.log('DISCONNECT', this.user.clientId);
+
+		console.log('There were', data.users.length, 'here before disconnect.\t', this.user.clientId);
+		findAndRemove(data.users, this.user.clientId);
+		console.log('There are', data.users.length, 'here now.\t\t\t', this.user.clientId);
+
+		everyone.now.syncPeers(this.user.clientId, false, function(){
+			everyone.now.updateUserList(data);
+		});
 	});
 
 
-
-
 	// Remove a user
-	function findAndRemove(array, property, value) {
-	   for (var index in array) {
-	      if(array[property] == value) {
-	          //Remove from array
-	          array.splice(index, 1);
-	      }    
-	   }
-	}
-
-	 
-
-	///////////////////////////////////////	 
-	/*
-	// Create primary key to keep track of all the clients that
-	// connect. Each one will be assigned a unique ID.
-	var primaryKey = 0;
-	 
-	 
-	// When a client has connected, assign it a UUID. In the
-	// context of this callback, "this" refers to the specific client
-	// that is communicating with the server.
-	//
-	// NOTE: This "uuid" value is NOT synced to the client; however,
-	// when the client connects to the server, this UUID will be
-	// available in the calling context.
-	everyone.connected(
-		function(){
-			this.now.uuid = ++primaryKey;
+	function findAndRemove(array, value) {
+		for (var index in array) {
+			/*console.log('index=', index);
+			console.log('value=', value);
+			console.log('array=', array);
+			console.log('array[index]=', array[index]);*/
+			if(array[index] == value) {
+				//Remove 1 item from array starting at 'index'
+				array.splice(index, 1);
+			}
 		}
-	);
-
-	*//////////////////////////////////////
-	 
-
 	}
-)();
+
+})();
