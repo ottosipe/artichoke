@@ -6,6 +6,7 @@
     "start": "supervisor server"
   },
   "dependencies": {
+    "colors": "*",
     "express": "3.0.5",
     "jade": "*",
     "less-middleware": "*",
