@@ -40,8 +40,7 @@ exports.create = function(req, res){
 // throw user into a random room
 exports.save = function(req, res){
 	console.log(req.body.doc)
-	var document = req.body.doc.join("\n");
-	fs.writeFile(_servers + req.params.hash + "/app.js", document ,function() {
+	fs.writeFile(_servers + req.params.hash + "/app.js", req.body.doc ,function() {
 		res.send("saved")
 	});
 };

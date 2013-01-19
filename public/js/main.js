@@ -129,14 +129,12 @@ $(function(){
     bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
     exec: function(editor) {
         $.post(window.location+"/save", { 
-          doc: editor.getSession().doc.getAllLines()
+          doc: editor.getSession().getValue()
         }, function(data) {
           console.log(data)
           $('#disconnect_notifier').text(data);
           $('#disconnect_notifier').fadeIn('slow');
           $('#disconnect_notifier').delay(1500).fadeOut('slow');
-
-          console.log(data)
         })
     },
     readOnly: false // not for readOnly mode
