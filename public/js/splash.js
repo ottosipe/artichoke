@@ -1,5 +1,5 @@
 $('.btn').click(function(){
-	$.post('/go', function(data){
+	$.post('/create', function(data){
 	  console.log(data);
 	  window.location = data;
 	});
