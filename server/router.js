@@ -19,9 +19,8 @@ exports.splash = function(req, res){
 };
 
 // room page
-exports.index = function(req, res){
-	if (req.params.hash == "favicon.ico") return;
-	res.render('index', { title: 'Artichoke', file: fs.readFileSync(_servers+req.params.hash+"/app.js")});
+exports.edit = function(req, res){
+	res.render('index', { title: 'Artichoke', file: fs.readFileSync(_servers+req.params.hash+"/app.js"), name: "/app.js"});
 };
 
 // throw user into a random room

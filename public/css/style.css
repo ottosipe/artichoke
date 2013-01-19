@@ -41,23 +41,24 @@ body {
   border: #2f3129 2px solid;
   margin: 10px;
 }
-.red {
-  background-color: red;
+.highlight {
+  background-color: #8cc84b;
 }
 .center {
   text-align: center;
+  padding-top: 10px;
   height: 0px;
+  margin-bottom: -10px;
 }
 #disconnect_notifier {
   background: black;
-  border: 1px #2f3129 solid;
-  display: none;
+  border-bottom: 2px #8cc84b solid;
   margin: 0 auto;
-  padding: 4px 30px;
+  padding: 10px 30px;
   text-align: center;
   color: white;
   height: 20px;
-  margin-bottom: -28px;
+  margin-bottom: -40px;
 }
 #footer {
   background-img: url('/img/use_your_illusion.png');

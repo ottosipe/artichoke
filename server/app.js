@@ -13,11 +13,11 @@ config(app);
 
 // define API routes here
 app.get('/', router.splash);
-app.get('/:hash', router.index);
+app.get('/edit/:hash', router.edit);
 
 
 app.post('/create', router.create);
-app.post('/:hash/save', router.save);
+app.post('/edit/:hash/save', router.save);
 
 
 

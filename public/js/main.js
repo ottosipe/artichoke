@@ -26,7 +26,7 @@ $(function(){
   now.removeZombieCursor = function( id ) {
     for (var item in window.cursors) {
       if(item) {
-        editor.session.removeGutterDecoration(window.cursors[item], "red")
+        editor.session.removeGutterDecoration(window.cursors[item], "highlight")
         delete window.cursors[item];
       }
     }
@@ -34,8 +34,8 @@ $(function(){
 
   // Syncs this browser window with incoming syncs
   now.updateCursor = function( cursorLoc ){
-    editor.session.addGutterDecoration(cursorLoc.row, "red")
-    editor.session.removeGutterDecoration(cursors[cursorLoc.id], "red")
+    editor.session.addGutterDecoration(cursorLoc.row, "highlight")
+    editor.session.removeGutterDecoration(cursors[cursorLoc.id], "highlight")
     window.cursors[cursorLoc.id] = cursorLoc.row;
   }
 
@@ -44,9 +44,9 @@ $(function(){
     falseChange = true;
     console.log(now.core.clientId, textData.data.action);
     var data = textData.data;
-    console.log(data);
+    //console.log(data);
     if(data.action == "removeLines" || data.action == "removeText") {
-      console.log(data.range);
+      //console.log(data.range);
       var r = data.range;
       console.log(r);
       var range = new Range(r.start.row, r.start.column, r.end.row, r.end.column);
