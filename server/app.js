@@ -24,13 +24,12 @@ app.get('/view/:hash', router.view);
 app.get('/email', router.email);
 app.get('/db', router.db);
 app.get('/admin', router.admin);
-app.get('/auth', router.auth);
+app.get('/auth/:id', router.auth);
 
-
+// 404
 /*app.get('/*', function(req, res){
-  res.send('Artichoke.js - That page is not here.', 404);
+  res.status(404).send('Artichoke.js - That page is not here.');
 });*/
-
 
 // ---------------------------------------------------------- //
 // ---------------------------------------------------------- //
@@ -105,13 +104,6 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	}
 
 	// ---------------------------------------------------------- //
-	// ---------------------------------------------------------- //
-
-	/*everyone.now.sendDropBoxToken = function( url ){
-		console.log(url);
-	};*/
-
-	// ---------------------------------------------------------- //
 	// Event Handling
 	// ---------------------------------------------------------- //
 
@@ -134,13 +126,6 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	});
 
 	// ---------------------------------------------------------- //
-	// Room Handling
-	// ---------------------------------------------------------- //
-
-	var rooms = [];
-
-
-	// ---------------------------------------------------------- //
-	// ---------------------------------------------------------- //
+	// ---------------------------------------------------------- //	
 })();
 

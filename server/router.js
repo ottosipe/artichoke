@@ -53,8 +53,8 @@ exports.save = function(req, res){
 };
 
 exports.auth = function(req, res) {
-	console.log()
-	res.render('auth.jade', { title: 'Artichoke' } );
+	console.log(req.params.id);
+	res.render('auth.jade', { url:req.params.id , title: 'Artichoke' } );
 };
 
 

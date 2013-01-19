@@ -1,4 +1,3 @@
-
 var express = require("express")
   , path = require('path')
   , secret = require('./secret.js');

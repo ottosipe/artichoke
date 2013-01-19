@@ -19,12 +19,27 @@ client.authenticate(function(error, client) {
     }
     console.log("Auth'd with Dropbox!");
 
-
     console.log(client.oauth.token);
     console.log(client.oauth.tokenSecret);
     console.log(client.uid);
-    console.log('inside callback');
 
-    //Send this user data to the server, then server can make calls on behalf of user
-    //now.sendDropBoxToken(window.location.href);
+    // Strip out '/auth' from pathname
+    var url_to_go = window.location.pathname.substr(5);
+    console.log(url_to_go);
+
+    $.post('/create', 
+        { token:       client.oauth.token
+        , tokenSecret: client.oauth.tokenSecreturl
+        , uid:         client.uid
+        , url:         url_to_go
+        }, function(data){
+      console.log(data);
+      window.location = "/edit"+data;
+    });
 });
+
+
+/*
+cluster / spawn process
+substack - bouncy
+*/
