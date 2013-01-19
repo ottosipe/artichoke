@@ -19,8 +19,7 @@ exports.splash = function(req, res){
 };
 
 // room page
-exports.index = function(req, res){
-	if (req.params.hash == "favicon.ico") return;
+exports.edit = function(req, res){
 	res.render('index', { title: 'Artichoke', file: fs.readFileSync(_servers+req.params.hash+"/app.js")});
 };
 
