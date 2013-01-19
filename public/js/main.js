@@ -3,7 +3,7 @@ $(function(){
   window.users = [];
   window.cursors = {};
 
-  window.editor = ace.edit("editor");
+  var editor = ace.edit("editor");
   editor.setTheme("ace/theme/monokai");
   editor.getSession().setMode("ace/mode/javascript");
   editor.setHighlightActiveLine(false);
@@ -23,12 +23,11 @@ $(function(){
   // Syncs this browser window with incoming syncs
   now.updateCursor = function( cursorLoc ){
     console.log('test')
-    console.log(cursorLoc);
-    editor.session.addGutterDecoration(cursorLoc.row, "red")
+    console.log(cursors[cursorLoc.id], cursorLoc.row);
 
-      //  editor.session.addGutterDecoration(cursorLoc.row, "red")
-    //editor.session.removeGutterDecoration(cursors[cursorLoc.id].row, "red")
-//    window.cursors[cursorLoc.id] = cursorLoc.row;
+    editor.session.addGutterDecoration(cursorLoc.row, "red")
+    editor.session.removeGutterDecoration(cursors[cursorLoc.id], "red")
+    window.cursors[cursorLoc.id] = cursorLoc.row;
   }
 
   // Syncs this browser's text with the incoming changes to the text
@@ -44,9 +43,7 @@ $(function(){
     // Small popup notifier
   });
 
-<<<<<<< HEAD
-  editor.getSession().selection.on('changeCursor', function(e) {
-=======
+
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //
 
@@ -55,7 +52,6 @@ $(function(){
     editor.getSession().setMode("ace/mode/javascript");
     editor.setHighlightActiveLine(false);
     editor.getSession().selection.on('changeCursor', function(e) {
->>>>>>> 84d77dbd1695c2d13aaaef455c57d52aa8f79e5f
 		  // send socket update here ***
       var cursorLoc = editor.selection.getCursor();
       cursorLoc.id = now.core.clientId;
