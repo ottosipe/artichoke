@@ -31,6 +31,8 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	// Create the JSON object to store all user data
 	var data = { "users": [] }
 
+
+	// Sync User List
 	everyone.now.syncPeers = function( newClientId, connectFlag, cb ){
 		if(!connectFlag) {
 			// Update all the peers on disconnect
@@ -44,6 +46,19 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 			}
 		}
 	};
+
+	// Sync Cursor
+	everyone.now.syncCursors = function( loc, clientId ){
+		if(this.user.clientId != clientId) {
+			everyone.now.updateCursor(loc);
+		}
+	};
+
+	everyone.now.pushCursor = function( loc ){
+		everyone.now.syncCursors(loc, this.user.clientId);
+	};
+
+	// Sync Text
 
 	nowjs.on('connect', function(){
 		everyone.now.syncPeers(this.user.clientId, true, function(){

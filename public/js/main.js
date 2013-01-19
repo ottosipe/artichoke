@@ -11,9 +11,15 @@ $(function(){
     console.log(window.users);
   }
 
+  // Syncs this browser window with incoming syncs
+  now.updateCursor = function( cursorLoc ){
+    console.log(cursorLoc);
+  }
+
   now.core.on('disconnect', function(){
     console.log('Client disconnected.');
   });
+
 
 
   var editor = ace.edit("editor");
@@ -21,8 +27,9 @@ $(function(){
     editor.getSession().setMode("ace/mode/javascript");
 
     editor.getSession().selection.on('changeCursor', function(e) {
-		console.log(editor.selection.getCursor())
-		// send socekt update here ***
+		  // send socket update here ***
+      var cursorLoc = editor.selection.getCursor();
+      now.pushCursor(cursorLoc);
 	});
 
 	editor.getSession().selection.on('changeSelection', function(e) {
