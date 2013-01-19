@@ -53,6 +53,20 @@ $(function(){
   now.core.on('disconnect', function(){
     console.log('Client disconnected.');
     // Small popup notifier
+    //$('#disconnect_notifier').css('visibility', '');
+    $('#disconnect_notifier').fadeIn('slow');
+  });
+
+  now.core.on('reconnect', function (){
+    console.log('Client reconnected.');
+    $('#disconnect_notifier').fadeOut('slow');
+  });
+
+  now.core.on('reconnect_failed', function (){
+    console.log('Client has exhausted reconnects.');
+    $('#disconnect_notifier').fadeOut('slow');
+    $('#disconnect_notifier').text('Artichoke cannot reconnect :(');
+    $('#disconnect_notifier').fadeIn('slow');
   });
 
 
