@@ -25,10 +25,11 @@ $(function(){
   var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
     editor.getSession().setMode("ace/mode/javascript");
-
+    editor.setHighlightActiveLine(false);
     editor.getSession().selection.on('changeCursor', function(e) {
 		  // send socket update here ***
       var cursorLoc = editor.selection.getCursor();
+      cursorLoc.id = now.core.clientId;
       now.pushCursor(cursorLoc);
 	});
 
