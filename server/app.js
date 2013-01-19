@@ -67,7 +67,7 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 		}
 	};
 	everyone.now.pushText = function( textData ){
-		everyone.now.syncText(loc, this.user.clientId);
+		everyone.now.syncText(textData, this.user.clientId);
 	};
 
 	// ---------------------------------------------------------- //
