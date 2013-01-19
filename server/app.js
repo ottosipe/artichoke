@@ -29,8 +29,11 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	console.log('nowJS initialized');
 
 	// Create the JSON object to store all user data
-	var data = { "users": [] }
+	var data = { "users": [] };
 
+	// ---------------------------------------------------------- //
+	// Synchro Functions
+	// ---------------------------------------------------------- //
 
 	// Sync User List
 	everyone.now.syncPeers = function( newClientId, connectFlag, cb ){
@@ -50,15 +53,42 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	// Sync Cursor
 	everyone.now.syncCursors = function( loc, clientId ){
 		if(this.user.clientId != clientId) {
-			everyone.now.updateCursor(loc);
+			this.now.updateCursor(loc);
 		}
 	};
-
 	everyone.now.pushCursor = function( loc ){
 		everyone.now.syncCursors(loc, this.user.clientId);
 	};
 
 	// Sync Text
+	everyone.now.syncText = function( textData, clientId ){
+		if(this.user.clientId != clientId) {
+			this.now.updateText(textData);
+		}
+	};
+	everyone.now.pushText = function( textData ){
+		everyone.now.syncText(loc, this.user.clientId);
+	};
+
+	// ---------------------------------------------------------- //
+	// ---------------------------------------------------------- //
+
+	// Remove a user
+	function findAndRemove(array, value) {
+		for (var index in array) {
+			/*console.log('index=', index);
+			console.log('value=', value);
+			console.log('array=', array);
+			console.log('array[index]=', array[index]);*/
+			if(array[index] == value) {
+				//Remove 1 item from array starting at 'index'
+				array.splice(index, 1);
+			}
+		}
+	}
+
+	// ---------------------------------------------------------- //
+	// ---------------------------------------------------------- //
 
 	nowjs.on('connect', function(){
 		everyone.now.syncPeers(this.user.clientId, true, function(){
@@ -75,21 +105,6 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 			everyone.now.updateUserList(data);
 		});
 	});
-
-
-	// Remove a user
-	function findAndRemove(array, value) {
-		for (var index in array) {
-			/*console.log('index=', index);
-			console.log('value=', value);
-			console.log('array=', array);
-			console.log('array[index]=', array[index]);*/
-			if(array[index] == value) {
-				//Remove 1 item from array starting at 'index'
-				array.splice(index, 1);
-			}
-		}
-	}
 
 })();
 

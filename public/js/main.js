@@ -1,4 +1,5 @@
 $(function(){ 
+
   window.users = [];
   window.cursors = {};
 
@@ -7,6 +8,9 @@ $(function(){
   editor.getSession().setMode("ace/mode/javascript");
   editor.setHighlightActiveLine(false);
 
+
+  // ---------------------------------------------------------- //
+  // ---------------------------------------------------------- //
 
   now.updateUserList = function( clientList ){
     console.log('new client joined');
@@ -27,11 +31,31 @@ $(function(){
 //    window.cursors[cursorLoc.id] = cursorLoc.row;
   }
 
+  // Syncs this browser's text with the incoming changes to the text
+  now.updateText = function( textData ){
+    console.log(textData);
+  }
+
+  // ---------------------------------------------------------- //
+  // ---------------------------------------------------------- //
+
   now.core.on('disconnect', function(){
     console.log('Client disconnected.');
+    // Small popup notifier
   });
 
+<<<<<<< HEAD
   editor.getSession().selection.on('changeCursor', function(e) {
+=======
+  // ---------------------------------------------------------- //
+  // ---------------------------------------------------------- //
+
+  var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/javascript");
+    editor.setHighlightActiveLine(false);
+    editor.getSession().selection.on('changeCursor', function(e) {
+>>>>>>> 84d77dbd1695c2d13aaaef455c57d52aa8f79e5f
 		  // send socket update here ***
       var cursorLoc = editor.selection.getCursor();
       cursorLoc.id = now.core.clientId;
