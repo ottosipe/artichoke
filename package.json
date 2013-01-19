@@ -10,6 +10,7 @@
     "jade": "*",
     "less-middleware": "*",
     "mongodb": "*",
-    "nodemailer": "*"
+    "nodemailer": "*",
+    "now": "*"
   }
 }
