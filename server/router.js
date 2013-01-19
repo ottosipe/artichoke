@@ -14,7 +14,6 @@ exports.splash = function(req, res){
 
 // room page
 exports.edit = function(req, res){
-
 	fs.readFile(_servers+req.params.hash+"/app.js", function(err, data) {
 		if (err) {
 			res.send(err);
@@ -24,9 +23,11 @@ exports.edit = function(req, res){
 	})	
 };
 
-
 // throw user into a new room
 exports.create = function(req, res){
+	if(arguments[2] !== undefined) {
+		console.log(arguments[2]);
+	}
 	var hash = sha1((new Date).getTime());
 	var hash = hash.substr(0,6);
 
@@ -35,6 +36,8 @@ exports.create = function(req, res){
 		fs.writeFile(_servers + hash + "/app.js", "console.log('hello node!');");
 	
 	});
+
+	// create tokbox token!!
 
 	res.send(hash);
 };
@@ -47,6 +50,11 @@ exports.save = function(req, res){
 		res.send("saved")
 		
 	});
+};
+
+exports.auth = function(req, res) {
+	console.log()
+	res.render('auth.jade', { title: 'Artichoke' } );
 };
 
 

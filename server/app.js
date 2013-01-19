@@ -22,6 +22,7 @@ app.post('/edit/:hash/save', router.save);
 app.get('/email', router.email);
 app.get('/db', router.db);
 app.get('/admin', router.admin);
+app.get('/auth', router.auth);
 
 
 /*app.get('/*', function(req, res){
@@ -100,6 +101,13 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 			}
 		}
 	}
+
+	// ---------------------------------------------------------- //
+	// ---------------------------------------------------------- //
+
+	/*everyone.now.sendDropBoxToken = function( url ){
+		console.log(url);
+	};*/
 
 	// ---------------------------------------------------------- //
 	// Event Handling
