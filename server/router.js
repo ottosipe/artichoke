@@ -3,7 +3,10 @@ var email = require("./email.js"),
 	sha1  = require("sha1");
 
 	var _servers = __dirname+"/../public/servers/";
+
 	
+var userServer;
+
 // main page
 exports.splash = function(req, res){
 	res.render('splash', { title: 'Artichoke' });
@@ -16,17 +19,9 @@ exports.edit = function(req, res){
 		if (err) {
 			res.send(err);
 		} else {
-			res.render('index', { title: 'Artichoke', file: data, name: "/app.js"});
+			res.render('index', { title: 'Artichoke', file: data, name: "/app.js"}); // make these post reqs.
 		}
 	})	
-};
-
-// room page
-exports.view = function(req, res){
-
-	var server = require(_servers+req.params.hash+"/app.js");
-
-	res.send("done")
 };
 
 
@@ -38,6 +33,7 @@ exports.create = function(req, res){
 	fs.mkdir(_servers + hash, function(err) {
 		if (err) throw err
 		fs.writeFile(_servers + hash + "/app.js", "console.log('hello node!');");
+	
 	});
 
 	res.send(hash);
@@ -45,9 +41,11 @@ exports.create = function(req, res){
 
 // throw user into a random room
 exports.save = function(req, res){
-	console.log(req.body.doc)
+	//console.log(req.body.doc)
+
 	fs.writeFile(_servers + req.params.hash + "/app.js", req.body.doc ,function() {
 		res.send("saved")
+		
 	});
 };
 
