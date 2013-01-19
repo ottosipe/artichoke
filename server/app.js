@@ -29,7 +29,7 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	console.log('nowJS initialized');
 
 	// Create the JSON object to store all user data
-	var data = { "users": [] }
+	var data = { "users": [] };
 
 	// ---------------------------------------------------------- //
 	// Synchro Functions
