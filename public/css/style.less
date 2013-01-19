@@ -1,5 +1,7 @@
 @gutter: #2f3129;
 @main: #272822;
+@node: #8cc84b;
+@bmw: #0088ce;
 
 body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -50,22 +52,26 @@ body {
     margin: 10px;
 }
 
-.red {
-  background-color: red;
+.highlight {
+  background-color: @node;
 }
+
 
 .center {
   text-align: center;
+  padding-top: 10px;
   height: 0px;
+  margin-bottom: -10px;
 }
+
 #disconnect_notifier {
   background: black;
-  border: 1px @gutter solid;
-  display: none;
+  border-bottom: 2px @node solid;
+  //display: none;
   margin: 0 auto;
-  padding: 4px 30px;
+  padding: 10px 30px;
   text-align: center;
   color: white;
   height: 20px;
-  margin-bottom: -28px;
+  margin-bottom: -40px;
 }

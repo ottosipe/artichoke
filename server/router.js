@@ -20,7 +20,7 @@ exports.splash = function(req, res){
 
 // room page
 exports.edit = function(req, res){
-	res.render('index', { title: 'Artichoke', file: fs.readFileSync(_servers+req.params.hash+"/app.js")});
+	res.render('index', { title: 'Artichoke', file: fs.readFileSync(_servers+req.params.hash+"/app.js"), name: "/app.js"});
 };
 
 // throw user into a random room
