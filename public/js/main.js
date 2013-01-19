@@ -33,16 +33,17 @@ $(function(){
     console.log(now.core.clientId, textData.data.action);
     var data = textData.data;
     if(data.action == "removeLines") {
-      if(data.lines != undefined) {
-        console.log(data.lines, data.range)
-      } else {
-        console.log(data.text, data.range)
-      }
+      console.log(data.range)
+      var r = data.range;
+      console.log(r)
+      var range = new Range(r.start.row, r.start.column, r.end.row, r.end.column);
+      editor.session.remove(range)
     } else if (data.action == "insertText") {
       if(data.lines != undefined) {
         console.log(data.lines, data.range)
       } else {
         console.log(data.text, data.range)
+        editor.session.insert(data.range, data.text)
       }
     }
   }
