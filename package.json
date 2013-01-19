@@ -7,11 +7,14 @@
   },
   "dependencies": {
     "colors": "*",
+    "dropbox": "*",
     "express": "3.0.5",
     "jade": "*",
     "less-middleware": "*",
     "mongodb": "*",
     "nodemailer": "*",
-    "now": "*"
+    "now": "*",
+    "sha1": "*",
+    "util": "*"
   }
 }

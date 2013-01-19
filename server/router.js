@@ -1,6 +1,7 @@
 var mongo = require("./database.js"),
 	email = require("./email.js"),
-	fs 	  = require('fs');
+	fs 	  = require('fs'),
+	sha1  = require("sha1");
 
 mongo.connect(function(msg) {
 	if(msg == null)
@@ -10,8 +11,19 @@ mongo.connect(function(msg) {
 });
 
 // main page
+exports.splash = function(req, res){
+	res.render('splash', { title: 'Artichoke' });
+};
+
+// room page
 exports.index = function(req, res){
 	res.render('index', { title: 'Artichoke', file: fs.readFileSync(__dirname+"/../public/servers/app.js")});
+};
+
+// throw user into a random room
+exports.go = function(req, res){
+	var hash = sha1((new Date).getTime());
+	res.send(hash);
 };
 
 // email test

@@ -4,23 +4,33 @@ var express   = require('express')
   , colors    = require('colors')
   , router    = require('./router.js')
   , config    = require('./config.js')
-  , http      = require('http');
+  , http      = require('http')
+  , Dropbox   = require('dropbox')
+  , sha1      = require('sha1');
 
 // setup here
 config(app);
 
-
 // define API routes here
-app.get('/', router.index);
+app.get('/', router.splash);
+app.post('/go', router.go);
+app.get('/index', router.index);
 app.get('/email', router.email);
 app.get('/db', router.db);
 app.get('/admin', router.admin);
 
 
+// ---------------------------------------------------------- //
+// ---------------------------------------------------------- //
+
 // start the server
 var httpApp = http.createServer(app).listen(app.get('port'), function(){
   console.log(("Express server listening on port " + app.get('port')).yellow);
 });
+
+// ---------------------------------------------------------- //
+// ---------------------------------------------------------- //
+
 
 // Create a local memory space for further now-configuration.
 (function(){
@@ -76,18 +86,14 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	// Remove a user
 	function findAndRemove(array, value) {
 		for (var index in array) {
-			/*console.log('index=', index);
-			console.log('value=', value);
-			console.log('array=', array);
-			console.log('array[index]=', array[index]);*/
 			if(array[index] == value) {
-				//Remove 1 item from array starting at 'index'
 				array.splice(index, 1);
 			}
 		}
 	}
 
 	// ---------------------------------------------------------- //
+	// Event Handling
 	// ---------------------------------------------------------- //
 
 	nowjs.on('connect', function(){
@@ -106,6 +112,14 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 		});
 	});
 
-})();
+	// ---------------------------------------------------------- //
+	// Room Handling
+	// ---------------------------------------------------------- //
 
+	var rooms = [];
+
+
+	// ---------------------------------------------------------- //
+	// ---------------------------------------------------------- //
+})();
 
