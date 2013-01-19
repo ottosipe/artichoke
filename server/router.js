@@ -1,18 +1,9 @@
-var mongo = require("./database.js"),
-	email = require("./email.js"),
+var email = require("./email.js"),
 	fs 	  = require('fs'),
 	sha1  = require("sha1");
 
 	var _servers = __dirname+"/../public/servers/";
 	
-
-mongo.connect(function(msg) {
-	if(msg == null)
-		console.log("Mongo Connected!");
-	else 
-		console.log(msg);
-});
-
 // main page
 exports.splash = function(req, res){
 	res.render('splash', { title: 'Artichoke' });
@@ -27,13 +18,19 @@ exports.edit = function(req, res){
 		} else {
 			res.render('index', { title: 'Artichoke', file: data, name: "/app.js"});
 		}
-	})
-
-
-	
+	})	
 };
 
-// throw user into a random room
+// room page
+exports.view = function(req, res){
+
+	var server = require(_servers+req.params.hash+"/app.js");
+
+	res.send("done")
+};
+
+
+// throw user into a new room
 exports.create = function(req, res){
 	var hash = sha1((new Date).getTime());
 	var hash = hash.substr(0,6);
