@@ -109,6 +109,8 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	});
 
 	nowjs.on('disconnect', function() {
+		everyone.now.removeZombieCursor(this.user.clientId);
+
 		console.log('There were', data.users.length, 'here before disconnect.\t', this.user.clientId);
 		findAndRemove(data.users, this.user.clientId);
 		console.log('There are', data.users.length, 'here now.\t\t\t', this.user.clientId);
