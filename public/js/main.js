@@ -148,5 +148,14 @@ $(function(){
     readOnly: false // not for readOnly mode
   });
 
+  editor.commands.addCommand({
+    name: 'reload',
+    bindKey: {win: 'Shift-Shift',  mac: 'Shift-Shift'},
+    exec: function(editor) {
+        console.log('Node up!!');
+    },
+    readOnly: false // not for readOnly mode
+  });
+
 });
 
