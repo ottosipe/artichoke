@@ -2,25 +2,18 @@ var email = require("./email.js"),
 	fs 	  = require('fs'),
 	sha1  = require("sha1");
 
-	var _servers = __dirname+"/../public/servers/";
-
-	
+var _servers = __dirname+"/../public/servers/";	
 var userServer;
 
-// main page
-exports.splash = function(req, res){
-	res.render('splash', { title: 'Artichoke' });
+// admin page
+exports.admin = function(req, res){
+	res.send("<h3> You must be and admin! </h3>");
 };
 
-// room page
-exports.edit = function(req, res){
-	fs.readFile(_servers+req.params.hash+"/app.js", function(err, data) {
-		if (err) {
-			res.send(err);
-		} else {
-			res.render('index', { title: 'Artichoke', file: data, name: "/app.js"}); // make these post reqs.
-		}
-	})	
+// auth page
+exports.auth = function(req, res) {
+	console.log(req.params.id);
+	res.render('auth.jade', { url:req.params.id , title: 'Artichoke' } );
 };
 
 // throw user into a new room
@@ -36,28 +29,30 @@ exports.create = function(req, res){
 		fs.writeFile(_servers + hash + "/app.js", "console.log('hello node!');");
 	
 	});
-
 	// create tokbox token!!
-
 	res.send(hash);
 };
 
-// throw user into a random room
-exports.save = function(req, res){
-	//console.log(req.body.doc)
-
-	fs.writeFile(_servers + req.params.hash + "/app.js", req.body.doc ,function() {
-		res.send("saved")
-		
-	});
+// db test
+exports.db = function(req, res){
+	mongo.db.collection("test", function(err, collection){
+		collection.insert({ msg: "hello world" }, function(err, docs){
+			if(err) throw err
+			res.send(docs);
+		});
+	})
 };
 
-exports.auth = function(req, res) {
-	console.log(req.params.id);
-	res.render('auth.jade', { url:req.params.id , title: 'Artichoke' } );
+// room page
+exports.edit = function(req, res){
+	fs.readFile(_servers+req.params.hash+"/app.js", function(err, data) {
+		if (err) {
+			res.send(err);
+		} else {
+			res.render('index', { title: 'Artichoke', file: data, name: "/app.js"}); // make these post reqs.
+		}
+	})	
 };
-
-
 
 // email test
 exports.email = function(req, res){
@@ -72,17 +67,16 @@ exports.email = function(req, res){
 	});
 };
 
-// db test
-exports.db = function(req, res){
-	mongo.db.collection("test", function(err, collection){
-		collection.insert({ msg: "hello world" }, function(err, docs){
-			if(err) throw err
-			res.send(docs);
-		});
-	})
+// throw user into a random room
+exports.save = function(req, res){
+	//console.log(req.body.doc)
+	fs.writeFile(_servers + req.params.hash + "/app.js", req.body.doc ,function() {
+		res.send("saved")
+		
+	});
 };
 
-// admin page
-exports.admin = function(req, res){
-	res.send("<h3> You must be and admin! </h3>");
+// main page
+exports.splash = function(req, res){
+	res.render('splash', { title: 'Artichoke' });
 };
