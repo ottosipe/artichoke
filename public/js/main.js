@@ -1,7 +1,9 @@
 $(function(){ 
 	
-
   window.users = [];
+
+  // ---------------------------------------------------------- //
+  // ---------------------------------------------------------- //
 
   now.updateUserList = function( clientList ){
     console.log('new client joined');
@@ -16,11 +18,21 @@ $(function(){
     console.log(cursorLoc);
   }
 
+  // Syncs this browser's text with the incoming changes to the text
+  now.updateText = function( textData ){
+    console.log(textData);
+  }
+
+  // ---------------------------------------------------------- //
+  // ---------------------------------------------------------- //
+
   now.core.on('disconnect', function(){
     console.log('Client disconnected.');
+    // Small popup notifier
   });
 
-
+  // ---------------------------------------------------------- //
+  // ---------------------------------------------------------- //
 
   var editor = ace.edit("editor");
     editor.setTheme("ace/theme/monokai");
