@@ -1,19 +1,28 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  overflow: hidden;
+  background-color: #272822;
 }
-a {
-  color: #00B7FF;
-}
-.header {
+#header {
   position: fixed;
-  top: 10px;
   width: 100%;
+  height: 40px;
+  margin: 0;
+  padding: 10px;
+  color: white;
+  border-left: 40px #2f3129 solid;
 }
 #editor {
   position: absolute;
-  top: 40px;
-  right: 0;
+  margin: 0;
+  top: 60px;
+  right: 264px;
   bottom: 0;
   left: 0;
+}
+#tokbox {
+  position: absolute;
+  top: 40px;
+  right: 0px;
+  background-color: white;
 }
