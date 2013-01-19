@@ -10,7 +10,7 @@ mongo.connect(function(msg) {
 
 // main page
 exports.index = function(req, res){
-	res.render('index', { title: 'Otto Sipe' });
+	res.render('index', { title: 'Artichoke' });
 };
 
 // email test
