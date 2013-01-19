@@ -8,7 +8,7 @@ $(function(){
   editor.setTheme("ace/theme/monokai");
   editor.getSession().setMode("ace/mode/javascript");
   editor.setHighlightActiveLine(false);
-  editor.setShowPrintMargin(false); // got rid of vertial line
+  editor.setShowPrintMargin(false); // got rid of vertical line
 
   var Range = ace.require('ace/range').Range
 
@@ -21,20 +21,19 @@ $(function(){
     // Do other stuff when a new client joins
     window.users = clientList;
     console.log(window.users);
-
-
-    // Fix zombie cursors!
-    /*for (var item in window.cursors) {
-      if(item) {
-        console.log(item);
-        //fix this later
-      }
-    }*/
   }
+
+  now.removeZombieCursor = function( id ) {
+    for (var item in window.cursors) {
+      if(item) {
+        editor.session.removeGutterDecoration(window.cursors[item], "red")
+        delete window.cursors[item];
+      }
+    }
+  };
 
   // Syncs this browser window with incoming syncs
   now.updateCursor = function( cursorLoc ){
-    
     editor.session.addGutterDecoration(cursorLoc.row, "red")
     editor.session.removeGutterDecoration(cursors[cursorLoc.id], "red")
     window.cursors[cursorLoc.id] = cursorLoc.row;
