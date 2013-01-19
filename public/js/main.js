@@ -8,7 +8,8 @@ $(function(){
   editor.setTheme("ace/theme/monokai");
   editor.getSession().setMode("ace/mode/javascript");
   editor.setHighlightActiveLine(false);
-  editor.getSession().setUseWrapMode(true);
+  editor.setShowPrintMargin(false); // got rid of vertial line
+
   var Range = ace.require('ace/range').Range
 
   // ---------------------------------------------------------- //
@@ -130,10 +131,10 @@ $(function(){
   });
 
   editor.commands.addCommand({
-    name: 'save',
-    bindKey: {win: 'Ctrl-V',  mac: 'Command-V'},
+    name: 'reload',
+    bindKey: {win: 'Ctrl-R',  mac: 'Command-R'},
     exec: function(editor) {
-        console.log(editor)
+        console.log('Not allowed to reload!')
     },
     readOnly: false // not for readOnly mode
   });

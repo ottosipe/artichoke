@@ -1,5 +1,6 @@
 var mongo = require("./database.js"),
-	email = require("./email.js");
+	email = require("./email.js"),
+	fs 	  = require('fs');
 
 mongo.connect(function(msg) {
 	if(msg == null)
@@ -10,7 +11,7 @@ mongo.connect(function(msg) {
 
 // main page
 exports.index = function(req, res){
-	res.render('index', { title: 'Artichoke' });
+	res.render('index', { title: 'Artichoke', file: fs.readFileSync(__dirname+"/../public/servers/app.js")});
 };
 
 // email test

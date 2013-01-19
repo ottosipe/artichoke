@@ -13,12 +13,19 @@ $(function(){
       var session = TB.initSession(sessionId);
       session.addEventListener('sessionConnected', sessionConnectedHandler);
       session.addEventListener('streamCreated', streamCreatedHandler);
-      session.connect(apiKey, token);
+      //session.connect(apiKey, token);
 
       var publisher;
 
       function sessionConnectedHandler(event) {
-        publisher = TB.initPublisher(apiKey, 'youtokbox');
+
+        var params = {
+          encodedHeight: 300,
+          encodedWidth: 400,
+          width:125,
+          height:100
+        }
+        publisher = TB.initPublisher(apiKey, 'youtokbox', params);
         session.publish(publisher);
 
         // Subscribe to streams that were in the session when we connected
@@ -40,7 +47,8 @@ $(function(){
           // Create the div to put the subscriber element in to
           var div = document.createElement('div');
           div.setAttribute('id', 'stream' + streams[i].streamId);
-          $(".tokbox").append(div);
+          $("#tokboxes").append("<div class='tokbox'></div>");
+          $("#tokboxes .tokbox:last").html(div)
 
           // Subscribe to the stream
           session.subscribe(streams[i], div.id);

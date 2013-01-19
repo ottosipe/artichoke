@@ -2,14 +2,11 @@ extends layout
 
 block content
 	#disconnect_notifier Disconnected from the Server...
-	#header Artichoke Editor for Node
+	#header Artichoke - an editor for node.js 
 
-	#editor.
-		function foo(items) {
-			var i;
-			for (i = 0; i < items.length; i++) {
-				alert("Ace Rocks " + items[i]);
-			}
-		}
-	.tokbox
-		#youtokbox
+
+	#editor= file
+	#youtokbox.tokbox
+	#tokboxes
+
+	
