@@ -34,19 +34,28 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	// Create the JSON object to store all user data
 	var data = { "users": [] }
 
+	///////////////
+
 	everyone.now.syncPeers = function( cb ){
-		console.log('syncPeers() fired.');
+		console.log('syncPeers() fired with', data.users.length, 'users already here.');
+		data.users.push(this.user.clientId);
+		console.log('callingback, there are now', data.users.length, 'users');
 		cb(data);
 	};
 
+	///////////////
+
 	nowjs.on('connect', function(){
-		console.log('client #', this.user.clientId, 'connected.');
-		//console.log('There are', window.data.users.length, 'connected.');
+		console.log('CONNECTION IP');
+		//console.log(nowjs.server.sockets);
+		console.log(this.user.socket);
+		/*console.log('client #', this.user.clientId, 'connected.');
+		//console.log('There are', window.users.length, 'connected.');
 
 		console.log(data);
 		data.users.push( { "name": this.user.clientId } );
 		console.log(data);
-		everyone.now.pushUpdate( this.user.clientId );
+		everyone.now.pushUpdate( this.user.clientId );*/
 	});
 
 	nowjs.on('disconnect', function() {
@@ -59,9 +68,6 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 
 
 
-
-	///////////////////////////////////////
-	/*
 	// Remove a user
 	function findAndRemove(array, property, value) {
 	   for (var index in array) {
@@ -73,7 +79,9 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	}
 
 	 
-	 
+
+	///////////////////////////////////////	 
+	/*
 	// Create primary key to keep track of all the clients that
 	// connect. Each one will be assigned a unique ID.
 	var primaryKey = 0;

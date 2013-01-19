@@ -15,7 +15,7 @@ now.core.on('connect', function(){
 		now.syncPeers(function(e) {
 			console.log('back into the client func');
 			console.log(e);
-			window.users.push(e);
+			window.users = e;
 			console.log(window.users);
 		});
 	});
