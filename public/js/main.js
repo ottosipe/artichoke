@@ -1,5 +1,6 @@
 $(function(){ 
 
+  var dirtyText = false;
   window.users = [];
   window.cursors = {};
 
@@ -18,6 +19,15 @@ $(function(){
     // Do other stuff when a new client joins
     window.users = clientList;
     console.log(window.users);
+
+
+    // Fix zombie cursors!
+    /*for (var item in window.cursors) {
+      if(item) {
+        console.log(item);
+        //fix this later
+      }
+    }*/
   }
 
   // Syncs this browser window with incoming syncs
@@ -32,18 +42,20 @@ $(function(){
   now.updateText = function( textData ){
     console.log(now.core.clientId, textData.data.action);
     var data = textData.data;
+    console.log(data);
     if(data.action == "removeLines") {
-      console.log(data.range)
+      console.log(data.range);
       var r = data.range;
-      console.log(r)
+      console.log(r);
       var range = new Range(r.start.row, r.start.column, r.end.row, r.end.column);
-      editor.session.remove(range)
+      editor.session.remove(range);
     } else if (data.action == "insertText") {
-      if(data.lines != undefined) {
-        console.log(data.lines, data.range)
-      } else {
-        console.log(data.text, data.range)
-        editor.session.insert(data.range, data.text)
+      if(data.lines !== undefined) { // multiple lines
+        console.log(data.lines, data.range);
+        editor.session.insertLines(data.start.row, data.lines);
+      } else { // single word
+        console.log(data.lines);
+        editor.session.insert(data.range.start, data.text);
       }
     }
   }
@@ -87,14 +99,35 @@ $(function(){
   });
 
   editor.getSession().on("change", function(delta) {
-    now.pushText(delta);
-  })
+    console.log(delta);
+    if(dirtyText === true) {
+      dirtyText = false;
+      now.pushText(delta);
+    } else {
+      console.log('dirty is false');
+    }
+  });
+
+  $('#editor').keypress(function(){
+    dirtyText = true;
+  });
 
   editor.commands.addCommand({
     name: 'save',
     bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
     exec: function(editor) {
         console.log('Send update to server to save here ***')
+    },
+    readOnly: false // not for readOnly mode
+  });
+
+  editor.commands.addCommand({
+    name: 'delete',
+    bindKey: {win: 'Ctrl-V',  mac: 'Command-V'},
+    exec: function(editor) {
+        console.log('pressed delete');
+        console.log('Send update to server to save here ***')
+        dirtyText = true;
     },
     readOnly: false // not for readOnly mode
   });
