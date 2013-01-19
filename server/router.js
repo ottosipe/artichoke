@@ -1,5 +1,6 @@
 var mongo = require("./database.js"),
-	email = require("./email.js");
+	email = require("./email.js"),
+	sha1  = require("sha1");
 
 mongo.connect(function(msg) {
 	if(msg == null)
@@ -16,6 +17,12 @@ exports.splash = function(req, res){
 // room page
 exports.index = function(req, res){
 	res.render('index', { title: 'Artichoke' });
+};
+
+// throw user into a random room
+exports.go = function(req, res){
+	var hash = sha1((new Date).getTime());
+	res.send(hash);
 };
 
 // email test

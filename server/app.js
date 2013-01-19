@@ -5,13 +5,15 @@ var express   = require('express')
   , router    = require('./router.js')
   , config    = require('./config.js')
   , http      = require('http')
-  , Dropbox   = require('dropbox');
+  , Dropbox   = require('dropbox')
+  , sha1      = require('sha1');
 
 // setup here
 config(app);
 
 // define API routes here
 app.get('/', router.splash);
+app.post('/go', router.go);
 app.get('/index', router.index);
 app.get('/email', router.email);
 app.get('/db', router.db);
@@ -115,6 +117,7 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	// ---------------------------------------------------------- //
 
 	var rooms = [];
+
 
 	// ---------------------------------------------------------- //
 	// ---------------------------------------------------------- //
