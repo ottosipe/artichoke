@@ -83,9 +83,10 @@ $(function(){
   now.core.on('reconnect', function (){
     console.log('Client reconnected.');
 
-    setTimeout(function() {$('#disconnect_notifier').fadeOut('slow', function() {
-      $('#disconnect_notifier').text('Artichoke reconnected :)');
-    })}, 2400);
+    $('#disconnect_notifier').fadeOut('slow', function() {
+      $(this).text('Artichoke reconnected :)').fadeIn('slow').delay(2400).fadeOut('slow');;
+    })
+
   });
 
   now.core.on('reconnect_failed', function (){
