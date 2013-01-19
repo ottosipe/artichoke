@@ -1,6 +1,6 @@
 $(function(){ 
 
-  var dirtyText = false;
+  var falseChange = false;
   window.users = [];
   window.cursors = {};
 
@@ -8,7 +8,8 @@ $(function(){
   editor.setTheme("ace/theme/monokai");
   editor.getSession().setMode("ace/mode/javascript");
   editor.setHighlightActiveLine(false);
-
+  editor.getSession().setUseWrapMode(true);
+  var Range = ace.require('ace/range').Range
 
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //
@@ -40,23 +41,32 @@ $(function(){
 
   // Syncs this browser's text with the incoming changes to the text
   now.updateText = function( textData ){
+    falseChange = true;
     console.log(now.core.clientId, textData.data.action);
     var data = textData.data;
     console.log(data);
-    if(data.action == "removeLines") {
+    if(data.action == "removeLines" || data.action == "removeText") {
       console.log(data.range);
       var r = data.range;
       console.log(r);
       var range = new Range(r.start.row, r.start.column, r.end.row, r.end.column);
       editor.session.remove(range);
+
     } else if (data.action == "insertText") {
-      if(data.lines !== undefined) { // multiple lines
-        console.log(data.lines, data.range);
-        editor.session.insertLines(data.start.row, data.lines);
-      } else { // single word
-        console.log(data.lines);
+       // single word
         editor.session.insert(data.range.start, data.text);
-      }
+      
+    } else if (data.action == "insertLines" ) {
+        //console.log(data.lines.length, data.range);
+        
+
+        var all = data.lines.join("\n");
+        console.log(all)
+        editor.session.insert(data.range.start, data.text);
+        
+        
+    } else {
+      console.log(data.action)
     }
   }
 
@@ -100,11 +110,10 @@ $(function(){
 
   editor.getSession().on("change", function(delta) {
     console.log(delta);
-    if(dirtyText === true) {
-      dirtyText = false;
-      now.pushText(delta);
+    if(falseChange === true) {
+      falseChange = false;
     } else {
-      console.log('dirty is false');
+      now.pushText(delta);
     }
   });
 
@@ -122,16 +131,13 @@ $(function(){
   });
 
   editor.commands.addCommand({
-    name: 'delete',
+    name: 'save',
     bindKey: {win: 'Ctrl-V',  mac: 'Command-V'},
     exec: function(editor) {
-        console.log('pressed delete');
-        console.log('Send update to server to save here ***')
-        dirtyText = true;
+        console.log(editor)
     },
     readOnly: false // not for readOnly mode
   });
-
 
 });
 
