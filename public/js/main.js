@@ -77,16 +77,14 @@ $(function(){
   now.core.on('disconnect', function(){
     // Small popup notifier
     console.log('Client disconnected.');
-    $('#disconnect_notifier').fadeIn('slow');
+    $('#disconnect_notifier').text('Disconnected from the Server...').fadeIn('slow');
   });
 
   now.core.on('reconnect', function (){
     console.log('Client reconnected.');
-    $('#disconnect_notifier').fadeOut('slow');
-    $('#disconnect_notifier').text('Artichoke reconnected :)');
-    $('#disconnect_notifier').fadeIn('slow');
+
     setTimeout(function() {$('#disconnect_notifier').fadeOut('slow', function() {
-      $('#disconnect_notifier').text('Disconnected from the server...');
+      $('#disconnect_notifier').text('Artichoke reconnected :)');
     })}, 2400);
   });
 
@@ -129,7 +127,16 @@ $(function(){
     name: 'save',
     bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
     exec: function(editor) {
-        console.log('Send update to server to save here ***')
+        $.post(window.location+"/save", { 
+          doc: editor.getSession().doc.getAllLines()
+        }, function(data) {
+          console.log(data)
+          $('#disconnect_notifier').text(data);
+          $('#disconnect_notifier').fadeIn('slow');
+          $('#disconnect_notifier').delay(1500).fadeOut('slow');
+
+          console.log(data)
+        })
     },
     readOnly: false // not for readOnly mode
   });

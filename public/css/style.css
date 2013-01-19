@@ -2,6 +2,7 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   overflow: hidden;
   background-color: #272822;
+  color: white;
 }
 #header {
   position: fixed;
@@ -43,15 +44,18 @@ body {
 .red {
   background-color: red;
 }
+.center {
+  text-align: center;
+  height: 0px;
+}
 #disconnect_notifier {
   background: black;
   border: 1px #2f3129 solid;
   display: none;
   margin: 0 auto;
-  padding: 4px;
+  padding: 4px 30px;
   text-align: center;
   color: white;
-  width: 300px;
   height: 20px;
   margin-bottom: -28px;
 }
