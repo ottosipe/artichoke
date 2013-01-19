@@ -26,6 +26,11 @@ app.get('/db', router.db);
 app.get('/admin', router.admin);
 
 
+app.get('*', function(req, res){
+  res.send('Artichoke.js - That page is not here.', 404);
+});
+
+
 // ---------------------------------------------------------- //
 // ---------------------------------------------------------- //
 
