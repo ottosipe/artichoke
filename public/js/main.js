@@ -109,7 +109,6 @@ $(function(){
   });
 
   editor.getSession().on("change", function(delta) {
-    console.log(delta);
     if(falseChange === true) {
       falseChange = false;
     } else {
