@@ -11,7 +11,8 @@ var express   = require('express')
 config(app);
 
 // define API routes here
-app.get('/', router.index);
+app.get('/', router.splash);
+app.get('/index', router.index);
 app.get('/email', router.email);
 app.get('/db', router.db);
 app.get('/admin', router.admin);
@@ -24,6 +25,10 @@ app.get('/admin', router.admin);
 var httpApp = http.createServer(app).listen(app.get('port'), function(){
   console.log(("Express server listening on port " + app.get('port')).yellow);
 });
+
+// ---------------------------------------------------------- //
+// ---------------------------------------------------------- //
+
 
 // Create a local memory space for further now-configuration.
 (function(){
@@ -106,8 +111,12 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	});
 
 	// ---------------------------------------------------------- //
+	// Room Handling
 	// ---------------------------------------------------------- //
 
-})();
+	var rooms = [];
 
+	// ---------------------------------------------------------- //
+	// ---------------------------------------------------------- //
+})();
 

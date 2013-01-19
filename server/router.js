@@ -9,6 +9,11 @@ mongo.connect(function(msg) {
 });
 
 // main page
+exports.splash = function(req, res){
+	res.render('splash', { title: 'Artichoke' });
+};
+
+// room page
 exports.index = function(req, res){
 	res.render('index', { title: 'Artichoke' });
 };
