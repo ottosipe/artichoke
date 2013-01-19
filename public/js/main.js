@@ -148,15 +148,6 @@ $(function(){
     readOnly: false // not for readOnly mode
   });
 
-    editor.commands.addCommand({
-    name: 'paste',
-    bindKey: {win: 'Ctrl-V',  mac: 'Command-V'},
-    exec: function(editor) {
-        console.log('Not allowed to paste!')
-    },
-    readOnly: false // not for readOnly mode
-  });
-
   editor.commands.addCommand({
     name: 'shift',
     bindKey: {win: 'Shift-Shift',  mac: 'Shift-Shift'},

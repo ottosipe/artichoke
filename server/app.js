@@ -19,7 +19,7 @@ app.get('/edit/:hash', router.edit);
 app.post('/create', router.create);
 app.post('/edit/:hash/save', router.save);
 
-
+app.get('/view/:hash', router.view);
 
 app.get('/email', router.email);
 app.get('/db', router.db);
