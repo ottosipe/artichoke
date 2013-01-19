@@ -74,15 +74,19 @@ $(function(){
   // ---------------------------------------------------------- //
 
   now.core.on('disconnect', function(){
-    console.log('Client disconnected.');
     // Small popup notifier
-    //$('#disconnect_notifier').css('visibility', '');
+    console.log('Client disconnected.');
     $('#disconnect_notifier').fadeIn('slow');
   });
 
   now.core.on('reconnect', function (){
     console.log('Client reconnected.');
     $('#disconnect_notifier').fadeOut('slow');
+    $('#disconnect_notifier').text('Artichoke reconnected :)');
+    $('#disconnect_notifier').fadeIn('slow');
+    setTimeout(function() {$('#disconnect_notifier').fadeOut('slow', function() {
+      $('#disconnect_notifier').text('Disconnected from the server...');
+    })}, 2400);
   });
 
   now.core.on('reconnect_failed', function (){

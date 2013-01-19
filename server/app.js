@@ -4,11 +4,11 @@ var express   = require('express')
   , colors    = require('colors')
   , router    = require('./router.js')
   , config    = require('./config.js')
-  , http      = require('http');
+  , http      = require('http')
+  , Dropbox   = require('dropbox');
 
 // setup here
 config(app);
-
 
 // define API routes here
 app.get('/', router.index);
@@ -16,6 +16,9 @@ app.get('/email', router.email);
 app.get('/db', router.db);
 app.get('/admin', router.admin);
 
+
+// ---------------------------------------------------------- //
+// ---------------------------------------------------------- //
 
 // start the server
 var httpApp = http.createServer(app).listen(app.get('port'), function(){
@@ -76,18 +79,14 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 	// Remove a user
 	function findAndRemove(array, value) {
 		for (var index in array) {
-			/*console.log('index=', index);
-			console.log('value=', value);
-			console.log('array=', array);
-			console.log('array[index]=', array[index]);*/
 			if(array[index] == value) {
-				//Remove 1 item from array starting at 'index'
 				array.splice(index, 1);
 			}
 		}
 	}
 
 	// ---------------------------------------------------------- //
+	// Event Handling
 	// ---------------------------------------------------------- //
 
 	nowjs.on('connect', function(){
@@ -105,6 +104,9 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 			everyone.now.updateUserList(data);
 		});
 	});
+
+	// ---------------------------------------------------------- //
+	// ---------------------------------------------------------- //
 
 })();
 
