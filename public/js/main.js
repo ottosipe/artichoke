@@ -83,6 +83,7 @@
     console.log(window.users);
 
     now.sendDoc( editor.getSession().getValue(), sessionHash );
+    console.log('sent doc')
   }
 
   now.removeZombieCursor = function( id ) {
@@ -132,7 +133,9 @@
         var all = data.lines.join("\n");
         editor.session.insert(data.range.start, data.text);
     } else {
-      console.log(data.action)
+      console.log("receive doc");
+
+      editor.getSession().setValue(data.doc);
     }
   }
 
@@ -177,6 +180,7 @@
     var cursorLoc = editor.selection.getCursor();
     cursorLoc.id = now.core.clientId;
     now.pushCursor(cursorLoc, sessionHash);
+
   });
 
   editor.getSession().on("change", function(delta) {

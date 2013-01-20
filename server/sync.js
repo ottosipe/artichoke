@@ -37,7 +37,8 @@ module.exports = function syncNowJS(httpApp){
 
 	everyone.now.pushCursor = function( loc, hash ){
 		//checkSession(hash, this.user.clientId);
-		everyone.now.syncCursors(loc, this.user.clientId);
+
+		everyone.now.syncCursors(loc, this.user.clientId, hash);
 	};
 
 	// Sync Text
@@ -57,7 +58,7 @@ module.exports = function syncNowJS(httpApp){
 			action: "wholeDoc",
 			doc: doc
 		}
-		console.log(textData)
+		console.log("sending doc", doc)
 		everyone.now.syncText(textData, this.user.clientId, hash );
 	}
 
@@ -96,6 +97,8 @@ module.exports = function syncNowJS(httpApp){
 	// ---------------------------------------------------------- //
 
 	nowjs.on('connect', function(){
+
+		console.log("connected");
 		everyone.now.syncPeers(this.user.clientId, true, function(){
 			everyone.now.updateUserList(data);
 		});
