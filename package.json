@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "colors": "*",
-    "express": "3.0.5",
+    "express": "*",
     "jade": "*",
     "less-middleware": "*",
     "now": "*",
