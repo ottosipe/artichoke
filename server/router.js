@@ -18,19 +18,40 @@ exports.auth = function(req, res) {
 
 // throw user into a new room
 exports.create = function(req, res){
-	if(arguments[2] !== undefined) {
-		console.log(arguments[2]);
-	}
-	var hash = sha1((new Date).getTime());
-	var hash = hash.substr(0,6);
+	console.log('FUNION!');
+	console.log(req.body);
 
-	fs.mkdir(_servers + hash, function(err) {
-		if (err) throw err
-		fs.writeFile(_servers + hash + "/app.js", "console.log('hello node!');");
-	
-	});
-	// create tokbox token!!
-	res.send(hash);
+	var found = false;
+	if(req.body.url != undefined) {
+		console.log('WE HAVE A LINK!');
+
+		fs.readdir(_servers, function(err, dir){
+			if(err) throw err;
+			for(var f in dir) {
+				console.log(dir[f]);
+				if(dir[f][0] == '.') {
+					continue;
+				} else if(dir[f] == req.body.url) {
+					console.log('FOUND!!');
+					found = true;
+					res.send(dir[f]);
+				}
+			}
+		});
+	}
+
+	if(!found) {
+		var hash = sha1((new Date).getTime());
+		var hash = hash.substr(0,6);
+
+		fs.mkdir(_servers + hash, function(err) {
+			if (err) throw err
+			fs.writeFile(_servers + hash + "/app.js", "console.log('hello node!');");
+		
+		});
+		// create tokbox token!!
+		res.send(hash);
+	}
 };
 
 // db test
