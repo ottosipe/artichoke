@@ -1,4 +1,4 @@
-$(function(){ 
+
   var falseChange = false;
   var isNew = true;
 
@@ -120,7 +120,7 @@ $(function(){
 
     falseChange = true;
     //console.log(now.core.clientId, data.action);
-    console.log(data);
+    //console.log(data);
     if(data.action == "removeLines" || data.action == "removeText") {
       var r = data.range;
       var range = new Range(r.start.row, r.start.column, r.end.row, r.end.column);
@@ -250,4 +250,3 @@ $(function(){
     editor.getSession().setValue(filedata);
   }
 
-});
