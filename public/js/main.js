@@ -71,6 +71,8 @@ $(function(){
     // Do other stuff when a new client joins
     window.users = clientList;
     console.log(window.users);
+
+    now.sendDoc( editor.getSession().getValue(), sessionHash );
   }
 
   now.removeZombieCursor = function( id ) {
@@ -107,6 +109,8 @@ $(function(){
     if (hash != sessionHash) return;
 
     falseChange = true;
+    //console.log(now.core.clientId, data.action);
+    console.log(data);
     if(data.action == "removeLines" || data.action == "removeText") {
       var r = data.range;
       var range = new Range(r.start.row, r.start.column, r.end.row, r.end.column);

@@ -52,6 +52,15 @@ module.exports = function syncNowJS(httpApp){
 		everyone.now.syncText(textData, this.user.clientId, hash );
 	};
 
+	everyone.now.sendDoc = function( doc, hash ) {
+		var textData = { 
+			action: "wholeDoc",
+			doc: doc
+		}
+		console.log(textData)
+		everyone.now.syncText(textData, this.user.clientId, hash );
+	}
+
 	var sessions = {}
 	everyone.now.newUser = function( hash ) {
 		var id = this.user.clientId;
