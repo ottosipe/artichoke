@@ -40,10 +40,10 @@ $(function(){
   }
 
   // Syncs this browser's text with the incoming changes to the text
-  now.updateText = function( textData ){
+  now.updateText = function( data ){
     falseChange = true;
-    console.log(now.core.clientId, textData.data.action);
-    var data = textData.data;
+    console.log(now.core.clientId, data.action);
+
     //console.log(data);
     if(data.action == "removeLines" || data.action == "removeText") {
       //console.log(data.range);
@@ -112,10 +112,20 @@ $(function(){
   });
 
   editor.getSession().on("change", function(delta) {
+    console.log(delta.data)
+    var data = delta.data;
     if(falseChange === true) {
       falseChange = false;
     } else {
-      now.pushText(delta);
+        if(data.action != "insertLines") {
+          now.pushText(data);
+        }
+        else {
+          falseChange == true;
+          data.action = "wholeDoc";
+          data.text = editor.getSession().getValue();
+          now.pushText(data)
+        }
     }
   });
 

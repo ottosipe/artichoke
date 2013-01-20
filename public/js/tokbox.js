@@ -13,7 +13,7 @@ $(function(){
       var session = TB.initSession(sessionId);
       session.addEventListener('sessionConnected', sessionConnectedHandler);
       session.addEventListener('streamCreated', streamCreatedHandler);
-      session.connect(apiKey, token);
+      //session.connect(apiKey, token);
 
       var publisher;
 

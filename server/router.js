@@ -5,11 +5,6 @@ var email = require("./email.js"),
 var _servers = __dirname+"/../public/servers/";	
 var userServer;
 
-// admin page
-exports.admin = function(req, res){
-	res.send("<h3> You must be and admin! </h3>");
-};
-
 // auth page
 exports.auth = function(req, res) {
 	console.log(req.params.id);
@@ -54,18 +49,10 @@ exports.create = function(req, res){
 	}
 };
 
-// db test
-exports.db = function(req, res){
-	mongo.db.collection("test", function(err, collection){
-		collection.insert({ msg: "hello world" }, function(err, docs){
-			if(err) throw err
-			res.send(docs);
-		});
-	})
-};
 
 // room page
 exports.edit = function(req, res){
+
 	fs.readFile(_servers+req.params.hash+"/app.js", function(err, data) {
 		if (err) {
 			res.send(err);
@@ -75,20 +62,6 @@ exports.edit = function(req, res){
 	})	
 };
 
-// email test
-exports.email = function(req, res){
-	email.send({ 
-		name: "Otto", 
-		email: "ottosipe@gmail.com"
-	} 
-	// templates defined in /server/email/
-	,'template.jade', function(msg) { 
-		console.log(msg);
-		res.send(msg);
-	});
-};
-
-// throw user into a random room
 exports.save = function(req, res){
 	//console.log(req.body.doc)
 	fs.writeFile(_servers + req.params.hash + "/app.js", req.body.doc ,function() {
