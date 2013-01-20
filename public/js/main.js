@@ -1,5 +1,5 @@
 $(function(){ 
-
+  
   var falseChange = false;
   window.users = [];
   window.cursors = {};
@@ -13,6 +13,11 @@ $(function(){
   editor.setShowPrintMargin(false); // got rid of vertical line
 
   var Range = ace.require('ace/range').Range;
+
+  var sessionHash = window.location.pathname;
+  var cut = sessionHash.lastIndexOf("/") + 1;
+  sessionHash = sessionHash.substr(cut, sessionHash.length);
+
 
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //
@@ -38,21 +43,26 @@ $(function(){
   };
 
   // Syncs this browser window with incoming syncs
-  now.updateCursor = function( cursorLoc ){
+  now.updateCursor = function( cursorLoc, hash ){
+    if (hash != sessionHash) return;
+    
     editor.session.addGutterDecoration(cursorLoc.row, "highlight")
     editor.session.removeGutterDecoration(cursors[cursorLoc.id], "highlight")
     window.cursors[cursorLoc.id] = cursorLoc.row;
   }
 
   // Syncs this browser's text with the incoming changes to the text
-  now.updateText = function( data ){
+  now.updateText = function( data, hash ){
+
+    if (hash != sessionHash) return;
+
     falseChange = true;
-    console.log(now.core.clientId, data.action);
+    //console.log(now.core.clientId, data.action);
     //console.log(data);
     if(data.action == "removeLines" || data.action == "removeText") {
       //console.log(data.range);
       var r = data.range;
-      console.log(r);
+
       var range = new Range(r.start.row, r.start.column, r.end.row, r.end.column);
       editor.session.remove(range);
     } else if (data.action == "insertText") {
@@ -62,7 +72,7 @@ $(function(){
     } else if (data.action == "insertLines" ) {
         //console.log(data.lines.length, data.range);
         var all = data.lines.join("\n");
-        console.log(all)
+
         editor.session.insert(data.range.start, data.text);
     } else {
       console.log(data.action)
@@ -111,30 +121,28 @@ $(function(){
     // send socket update here ***
     var cursorLoc = editor.selection.getCursor();
     cursorLoc.id = now.core.clientId;
-    now.pushCursor(cursorLoc);
+    now.pushCursor(cursorLoc, sessionHash);
   });
 
   editor.getSession().on("change", function(delta) {
-    console.log(delta.data)
+    //console.log(delta.data)
     var data = delta.data;
     if(falseChange === true) {
       falseChange = false;
     } else {
         if(data.action != "insertLines") {
-          now.pushText(data);
+          now.pushText(data, sessionHash);
         }
         else {
           falseChange == true;
           data.action = "wholeDoc";
           data.text = editor.getSession().getValue();
-          now.pushText(data)
+          now.pushText(data, sessionHash)
         }
     }
   });
 
-  $('#editor').keypress(function(){
-    dirtyText = true;
-  });
+
 
   editor.commands.addCommand({
     name: 'save',
