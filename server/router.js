@@ -1,6 +1,35 @@
-var email = require("./email.js"),
-	fs 	  = require('fs'),
-	sha1  = require("sha1");
+var email  = require("./email.js")
+	, fs   = require('fs')
+	, sha1 = require("sha1")
+	, dbox = require('dbox');
+
+// ---------------------------------------------------------- //
+// Dropbox stuff
+// ---------------------------------------------------------- //
+
+// Step 1
+var app = dbox.app({ "app_key": "m1l60m7fimqc5is", "app_secret": "qls8i8mzdrl9652" });
+
+// Step 2
+var server_tok;
+app.requesttoken(function(status, request_token){
+	console.log('requesttoken...');
+	console.log(request_token);
+	// send the url to client
+  	server_tok = request_token.authorize_url;
+  	console.log('server_tok');
+  	console.log(server_tok);
+});
+
+/*app.accesstoken(server_tok, function(status, access_token){
+  console.log(access_token);
+});*/
+
+// Step 3
+//var client = app.client(access_token);
+
+// ---------------------------------------------------------- //
+// ---------------------------------------------------------- //
 
 var _servers = __dirname+"/../public/servers/";	
 var userServer;
