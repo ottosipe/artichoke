@@ -22,10 +22,18 @@ $(function(){
     console.log(userInfo);
   });
 
+  console.log('**client**');
+  console.log(client);
+
+  client.mkdir('/fun', function(error, stat) {
+        console.log('app.js stat');
+        console.log(stat);
+  });
+
   client.readdir("/", function(error, entries) {
     if (error) {} // Throw a Dialog Box
 
-      now.readNewExpressApp();
+    now.readNewExpressApp();
 
     // Create an Express App if the directory is empty
     if(entries.length == 0) {
@@ -47,6 +55,18 @@ $(function(){
 
     window.activeFile = 'untitled';
   });
+
+  now.dataXfer = function( filename, data, isFile) {
+    //console.log('*****************************');
+    console.log(filename);
+    if(isFile) {
+      
+    }
+    /*client.writeFile(filename, data, function(error, stat) {
+      console.log('app.js stat');
+      console.log(stat);
+    });*/
+  }
 
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //

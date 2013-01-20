@@ -110,32 +110,34 @@ module.exports = function syncNowJS(httpApp){
 	// ---------------------------------------------------------- //
 
 	everyone.now.readNewExpressApp = function() {
-		// console.log('cray');
-		// var rootdir = './public/sample_app/';
-		// fs.readdir(rootdir, function(err, files) {
-  //       	console.log(files);
-  //       	for(i in files) {
-  //       		var stats = fs.lstatSync(rootdir+files[i]);
-  //       		if(stats.isFile()) {
-		// 			fs.readFile(rootdir+files[i], 'utf-8', function(err, data) {
-		// 				console.log('$$$$$$$$$$$$');
-	 //        			console.log(data);
-	 //        		});
-  //   			} else if(stats.isDirectory()) {
-		// 			fs.readdir(rootdir, function(err, nested_files) {
-		// 				for(j in nested_files) {
-		// 					console.log('new dir -', rootdir, '+', files[i], '+ / +', nested_files[j]);
-		// 					var nstats = fs.lstatSync(rootdir+files[i]+'/'+nested_files[j]);
-		//         			/*if(nstats.isFile()) {
-		// 						fs.readFile(rootdir+files[i]+'/'+nested_files[j], 'utf-8', function(nerr, ndata) {
-		// 		        			console.log(ndata);
-		// 		        		});
-		// 		        	}*/
-		// 			    }
-		// 			});
-  //   			}
-  //       	}
-  //     });
+
+		console.log('readNewExpressApp()');
+		console.log(this.user.clientId);
+		var rootdir = './public/sample_app';
+		browse(rootdir);
+	}
+
+	function browse(path) {
+		console.log(path);
+		fs.readdir(path, function(err, files) {
+        	for(i in files) {
+        		(function(i){
+        			console.log(path,'/',files[i]);
+        			fs.lstat(path+'/'+files[i], function(err, stats) {
+		        		if(stats.isFile()) {
+		        			fs.readFile(path+'/'+files[i], 'utf-8', function(err, data) {
+			        			//console.log(data);
+			        			//console.log(files[i]);
+			        			everyone.now.dataXfer(files[i], data, true);
+			        		});
+		        		} else if(stats.isDirectory()) {
+		        			everyone.now.dataXfer(files[i], data, false);
+		        			browse(path + '/' + files[i]);
+		        		}
+		        	});
+        		})(i);
+        	}
+        });
 	}
 
 }
