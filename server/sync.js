@@ -36,6 +36,7 @@ module.exports = function syncNowJS(httpApp){
 	};
 
 	everyone.now.pushCursor = function( loc, hash ){
+		//checkSession(hash, this.user.clientId);
 		everyone.now.syncCursors(loc, this.user.clientId);
 	};
 
@@ -47,8 +48,28 @@ module.exports = function syncNowJS(httpApp){
 	};
 
 	everyone.now.pushText = function( textData, hash ){
+		//checkSession(hash, this.user.clientId);
 		everyone.now.syncText(textData, this.user.clientId, hash );
 	};
+
+	var sessions = {}
+	everyone.now.newUser = function( hash ) {
+		var id = this.user.clientId;
+		if(sessions[hash] == undefined) {
+			console.log("new room, new user")
+			sessions[hash] = {
+				users: [id],
+				master: id,
+				tokboxToken: ""
+			}
+		} else {
+			console.log("same room, new user")
+			sessions[hash].users.push(id);
+		}
+		
+		console.log(sessions);
+	}
+
 
 	// ---------------------------------------------------------- //
 	// ---------------------------------------------------------- //
@@ -89,32 +110,32 @@ module.exports = function syncNowJS(httpApp){
 	// ---------------------------------------------------------- //
 
 	everyone.now.readNewExpressApp = function() {
-		console.log('cray');
-		var rootdir = './public/sample_app/';
-		fs.readdir(rootdir, function(err, files) {
-        	console.log(files);
-        	for(i in files) {
-        		var stats = fs.lstatSync(rootdir+files[i]);
-        		if(stats.isFile()) {
-					fs.readFile(rootdir+files[i], 'utf-8', function(err, data) {
-						console.log('$$$$$$$$$$$$');
-	        			console.log(data);
-	        		});
-    			} else if(stats.isDirectory()) {
-					fs.readdir(rootdir, function(err, nested_files) {
-						for(j in nested_files) {
-							console.log('new dir -', rootdir, '+', files[i], '+ / +', nested_files[j]);
-							var nstats = fs.lstatSync(rootdir+files[i]+'/'+nested_files[j]);
-		        			/*if(nstats.isFile()) {
-								fs.readFile(rootdir+files[i]+'/'+nested_files[j], 'utf-8', function(nerr, ndata) {
-				        			console.log(ndata);
-				        		});
-				        	}*/
-					    }
-					});
-    			}
-        	}
-      });
+		// console.log('cray');
+		// var rootdir = './public/sample_app/';
+		// fs.readdir(rootdir, function(err, files) {
+  //       	console.log(files);
+  //       	for(i in files) {
+  //       		var stats = fs.lstatSync(rootdir+files[i]);
+  //       		if(stats.isFile()) {
+		// 			fs.readFile(rootdir+files[i], 'utf-8', function(err, data) {
+		// 				console.log('$$$$$$$$$$$$');
+	 //        			console.log(data);
+	 //        		});
+  //   			} else if(stats.isDirectory()) {
+		// 			fs.readdir(rootdir, function(err, nested_files) {
+		// 				for(j in nested_files) {
+		// 					console.log('new dir -', rootdir, '+', files[i], '+ / +', nested_files[j]);
+		// 					var nstats = fs.lstatSync(rootdir+files[i]+'/'+nested_files[j]);
+		//         			/*if(nstats.isFile()) {
+		// 						fs.readFile(rootdir+files[i]+'/'+nested_files[j], 'utf-8', function(nerr, ndata) {
+		// 		        			console.log(ndata);
+		// 		        		});
+		// 		        	}*/
+		// 			    }
+		// 			});
+  //   			}
+  //       	}
+  //     });
 	}
 
 }

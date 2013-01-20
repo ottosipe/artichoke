@@ -14,12 +14,17 @@ block append content
 	#footer.form-inline
 		.input-append
 			input(type='text', id="hash", placeholder="filepath", readonly)
-			a.btn save
-			a.btn change file
+			a.btn: i.icon-pencil
+			//
 		| 
 		.btn-group
-			a.btn#addFriend invite friend
-	
+			a.btn: i.icon-hdd
+			a.btn: i.icon-trash
+		
+		.pull-right.btn-group
+			a.btn#addFriend: i.icon-envelope
+			a.btn#startVideo
+				i.icon-facetime-video
 	.hide
 		#addFriendHTML
 			.input-append

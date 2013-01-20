@@ -1,6 +1,8 @@
 $(function(){ 
   
   var falseChange = false;
+  var isNew = true;
+
   window.users = [];
   window.cursors = {};
   window.files = [];
@@ -44,8 +46,14 @@ $(function(){
 
   // Syncs this browser window with incoming syncs
   now.updateCursor = function( cursorLoc, hash ){
+
+    if( isNew ) {
+      now.newUser(sessionHash);
+      isNew = false;
+    } 
+
     if (hash != sessionHash) return;
-    
+
     editor.session.addGutterDecoration(cursorLoc.row, "highlight")
     editor.session.removeGutterDecoration(cursors[cursorLoc.id], "highlight")
     window.cursors[cursorLoc.id] = cursorLoc.row;
@@ -53,6 +61,11 @@ $(function(){
 
   // Syncs this browser's text with the incoming changes to the text
   now.updateText = function( data, hash ){
+
+    if( isNew ) {
+      now.newUser(sessionHash);
+      isNew = false;
+    } 
 
     if (hash != sessionHash) return;
 
@@ -84,9 +97,9 @@ $(function(){
   // ---------------------------------------------------------- //
 
   now.core.on('connect', function() {
-    $('#host').text();
-    $('#host').text(now.core.clientId);
+
     console.log(now.core.clientId);
+
   });
 
   now.core.on('disconnect', function(){

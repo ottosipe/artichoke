@@ -5,15 +5,19 @@ $(function(){
   // Think of a session as a room, and a token as the key to get in to the room
   // Sessions and tokens are generated on your server and passed down to the client
   var apiKey = "22586972";
-  var sessionId = "1_MX4yMjU4Njk3Mn4xMjcuMC4wLjF-RnJpIEphbiAxOCAxOToxOToxMSBQU1QgMjAxM34wLjA3MjA1MTA1fg";
-  var token = "T1==cGFydG5lcl9pZD0yMjU4Njk3MiZzaWc9MmE4MTZmMDk4MmZiODI2ODY0NTg0OGRjYjNmNjU2MDY4NWZhZmM0NDpzZXNzaW9uX2lkPXVuZGVmaW5lZCZjcmVhdGVfdGltZT0xMzU4NTY1NTU3JmV4cGlyZV90aW1lPTEzNTg2NTE5NTcmcm9sZT1wdWJsaXNoZXImbm9uY2U9NDAwMDQ4JnNka192ZXJzaW9uPXRiLWRhc2hib2FyZC1qYXZhc2NyaXB0LXYx";
+  var sessionId = "2_MX4yMjU4Njk3Mn4xMjcuMC4wLjF-U3VuIEphbiAyMCAwMTo1NjoyNSBQU1QgMjAxM34wLjk3MjExNjF-";
+  var token = "T1==cGFydG5lcl9pZD0yMjU4Njk3MiZzaWc9ZTM3YTlhOWVkZTUzY2Y4ZWJhMTliNzMwODIzNzFmOGMwMWQ5YjcxNjpzZXNzaW9uX2lkPTJfTVg0eU1qVTROamszTW40eE1qY3VNQzR3TGpGLVUzVnVJRXBoYmlBeU1DQXdNVG8xTmpveU5TQlFVMVFnTWpBeE0zNHdMamszTWpFeE5qRi0mY3JlYXRlX3RpbWU9MTM1ODY3NTgwOCZleHBpcmVfdGltZT0xMzYxMjY3ODA4JnJvbGU9cHVibGlzaGVyJm5vbmNlPTExMDI2OSZzZGtfdmVyc2lvbj10Yi1kYXNoYm9hcmQtamF2YXNjcmlwdC12MQ==";
 
   TB.setLogLevel(TB.DEBUG);
 
       var session = TB.initSession(sessionId);
       session.addEventListener('sessionConnected', sessionConnectedHandler);
       session.addEventListener('streamCreated', streamCreatedHandler);
-      //session.connect(apiKey, token);
+      //
+      $("#startVideo").click(function() {
+        session.connect(apiKey, token);
+        $(this).parent().hide();
+      });
 
       var publisher;
 
