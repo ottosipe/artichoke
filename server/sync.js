@@ -106,9 +106,10 @@ module.exports = function syncNowJS(httpApp){
 		        			fs.readFile(path+'/'+files[i], 'utf-8', function(err, data) {
 			        			//console.log(data);
 			        			//console.log(files[i]);
-			        			everyone.now.dataXfer(files[i], data);
+			        			everyone.now.dataXfer(files[i], data, true);
 			        		});
 		        		} else if(stats.isDirectory()) {
+		        			everyone.now.dataXfer(files[i], data, false);
 		        			browse(path + '/' + files[i]);
 		        		}
 		        	});

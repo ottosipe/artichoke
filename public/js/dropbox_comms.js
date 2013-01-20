@@ -22,6 +22,14 @@ $(function(){
     console.log(userInfo);
   });
 
+  console.log('**client**');
+  console.log(client);
+
+  client.mkdir('/fun', function(error, stat) {
+        console.log('app.js stat');
+        console.log(stat);
+  });
+
   client.readdir("/", function(error, entries) {
     if (error) {} // Throw a Dialog Box
 
@@ -48,11 +56,15 @@ $(function(){
     window.activeFile = 'untitled';
   });
 
-  now.dataXfer = function( filename, data) {
+  now.dataXfer = function( filename, data, isFile) {
     //console.log('*****************************');
     console.log(filename);
-    /*client.getUserInfo(function(error, userInfo) {
-      console.log(userInfo);
+    if(isFile) {
+      
+    }
+    /*client.writeFile(filename, data, function(error, stat) {
+      console.log('app.js stat');
+      console.log(stat);
     });*/
   }
 
