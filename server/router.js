@@ -21,10 +21,11 @@ exports.create = function(req, res){
 	console.log('FUNION!');
 	console.log(req.body);
 
-	var found = false;
-	if(req.body.url != undefined) {
-		console.log('WE HAVE A LINK!');
+	var sandbox_name = "";
 
+	if(req.body.url != undefined) {
+		sandbox_name = req.body.url;
+		// Determine if the sandbox exists
 		fs.readdir(_servers, function(err, dir){
 			if(err) throw err;
 			for(var f in dir) {
@@ -32,26 +33,30 @@ exports.create = function(req, res){
 				if(dir[f][0] == '.') {
 					continue;
 				} else if(dir[f] == req.body.url) {
-					console.log('FOUND!!');
 					found = true;
-					res.send(dir[f]);
 				}
 			}
-		});
-	}
 
-	if(!found) {
+			// Create a new server sandbox
+			if(!found) {
+				fs.mkdir(_servers + req.body.url, function(err) {
+					if (err) throw err
+					fs.writeFile(_servers + req.body.url + "/app.js", "console.log('hello node!');");
+				});
+			}
+		});
+	} else {
 		var hash = sha1((new Date).getTime());
 		var hash = hash.substr(0,6);
-
+		sandbox_name = hash;
 		fs.mkdir(_servers + hash, function(err) {
 			if (err) throw err
 			fs.writeFile(_servers + hash + "/app.js", "console.log('hello node!');");
-		
 		});
-		// create tokbox token!!
-		res.send(hash);
 	}
+
+	// create tokbox token!!
+	res.send(sandbox_name);
 };
 
 // db test
