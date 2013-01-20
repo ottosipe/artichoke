@@ -3,6 +3,8 @@ $(function(){
   var falseChange = false;
   window.users = [];
   window.cursors = {};
+  window.files = [];
+  window.activeFile;
 
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/monokai");
@@ -43,7 +45,6 @@ $(function(){
   now.updateText = function( data ){
     falseChange = true;
     console.log(now.core.clientId, data.action);
-
     //console.log(data);
     if(data.action == "removeLines" || data.action == "removeText") {
       //console.log(data.range);
@@ -51,41 +52,34 @@ $(function(){
       console.log(r);
       var range = new Range(r.start.row, r.start.column, r.end.row, r.end.column);
       editor.session.remove(range);
-
     } else if (data.action == "insertText") {
        // single word
         editor.session.insert(data.range.start, data.text);
       
     } else if (data.action == "insertLines" ) {
         //console.log(data.lines.length, data.range);
-        
-
         var all = data.lines.join("\n");
         console.log(all)
         editor.session.insert(data.range.start, data.text);
-        
-        
     } else {
       console.log(data.action)
     }
   }
 
   // ---------------------------------------------------------- //
+  // Popup Notifiers for connection actions
   // ---------------------------------------------------------- //
 
   now.core.on('disconnect', function(){
-    // Small popup notifier
     console.log('Client disconnected.');
     $('#disconnect_notifier').text('Disconnected from the Server...').fadeIn('slow');
   });
 
   now.core.on('reconnect', function (){
     console.log('Client reconnected.');
-
     $('#disconnect_notifier').fadeOut('slow', function() {
       $(this).text('Artichoke reconnected :)').fadeIn('slow').delay(2400).fadeOut('slow');;
     })
-
   });
 
   now.core.on('reconnect_failed', function (){
@@ -137,14 +131,16 @@ $(function(){
     name: 'save',
     bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
     exec: function(editor) {
-        $.post(window.location+"/save", { 
-          doc: editor.getSession().getValue()
-        }, function(data) {
-          console.log(data)
+        client.writeFile(window.activeFile, editor.getSession().getValue(), function(error, stat) {
+          if (error) {
+            // Throw a dialog box
+          }
+
+          console.log("File saved as revision " + stat.revisionTag);
           $('#disconnect_notifier').text(data);
           $('#disconnect_notifier').fadeIn('slow');
           $('#disconnect_notifier').delay(1500).fadeOut('slow');
-        })
+        });
     },
     readOnly: false // not for readOnly mode
   });
@@ -166,6 +162,39 @@ $(function(){
     },
     readOnly: false // not for readOnly mode
   });
+
+  // ---------------------------------------------------------- //
+  // Dropbox Interface with Host User
+  // ---------------------------------------------------------- //
+
+  var client = new Dropbox.Client({
+    key: "0cYNdp0TWTA=|hn+SflkP/HQsDzXT6c9Fl7GLhbeo1ovUMiiIr3lHbQ==", sandbox: true
+  });
+  client.authDriver(new Dropbox.Drivers.Redirect({rememberUser: true}));
+
+  // Error Handling Logging
+  client.onError.addListener(function(error) {
+      console.error(error);
+  });
+
+  client.authenticate(function(error, client) {
+      if (error) {
+        // Throw a Dialog Box
+      }
+      console.log("Auth'd with Dropbox!");
+  });
+
+  client.readdir("/", function(error, entries) {
+    if (error) {
+      return showError(error);  // Something went wrong.
+    }
+
+    window.files = entries;
+    console.log("Your Dropbox contains " + entries.join(", "));
+  });
+
+  // ---------------------------------------------------------- //
+  // ---------------------------------------------------------- //
 
 });
 

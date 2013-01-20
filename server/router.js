@@ -67,7 +67,7 @@ exports.edit = function(req, res){
 		if (err) {
 			res.send(err);
 		} else {
-			res.render('index', { title: 'Artichoke', file: data, name: "/app.js"}); // make these post reqs.
+			res.render('index', { title: 'Artichoke' }); // make these post reqs.
 		}
 	})	
 };
