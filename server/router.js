@@ -30,19 +30,9 @@ exports.create = function(req, res){
 	res.send(sandbox_name);
 };
 
-// Create the entire directory for the user when they create a new sandbox
-function createExpressSandbox( filepath ){
-	//fs.writeFile(filepath + "/app.js", "console.log('hello node!');");
-}
-
-
 // room page
 exports.edit = function(req, res){
-	if (err) {
-		res.send(err);
-	} else {
-		res.render('index', { title: 'Artichoke' });
-	}
+	res.render('index', { title: 'Artichoke' });
 };
 
 // main page

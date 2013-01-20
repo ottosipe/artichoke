@@ -4,7 +4,7 @@ $(function(){
   window.users = [];
   window.cursors = {};
   window.files = [];
-  window.activeFile;
+  window.activeFile; // update this when in a new File
 
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/monokai");
@@ -13,6 +13,9 @@ $(function(){
   editor.setShowPrintMargin(false); // got rid of vertical line
 
   var Range = ace.require('ace/range').Range
+
+  // ---------------------------------------------------------- //
+  // ---------------------------------------------------------- //
 
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //
@@ -184,12 +187,28 @@ $(function(){
       console.log("Auth'd with Dropbox!");
   });
 
+
+  client.getUserInfo(function(error, userInfo) {
+    console.log(userInfo);
+  });
+
   client.readdir("/", function(error, entries) {
     if (error) {
-      return showError(error);  // Something went wrong.
+      // Throw a Dialog Box
+    }
+
+    // Create an Express App if the directory is empty
+    console.log('entries!!');
+    console.log(entries.length);
+    if(entries.length == 0) {
+      client.writeFile('app.js', 'var app = express();', function(error, stat) {
+        console.log('app.js stat');
+        console.log(stat);
+      });
     }
 
     window.files = entries;
+    window.activeFile = 'untitled';
     console.log("Your Dropbox contains " + entries.join(", "));
   });
 
