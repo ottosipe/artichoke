@@ -27,6 +27,5 @@ app.get('/edit/:hash', router.edit);
 
 
 app.post('/create', router.create);
-app.post('/edit/:hash/save', router.save);
 
 app.get('/auth/:id', router.auth);

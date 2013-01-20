@@ -3,10 +3,17 @@ extends layout
 block content
 	.center
 		span#disconnect_notifier hello there
-	#header Artichoke - an editor for node.js 
-		.file /untitled
+	#header
+		h3#title Artichoke
 
 	#editor
 	#youtokbox.tokbox
 	#tokboxes
-	#footer
+	#footer.form-inline
+		.input-append
+			input(type='text', id="hash", placeholder="filepath", readonly)
+			a.btn save
+			a.btn change file
+		| 
+		.btn-group
+			a.btn invite friends

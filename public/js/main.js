@@ -12,7 +12,7 @@ $(function(){
   editor.setHighlightActiveLine(false);
   editor.setShowPrintMargin(false); // got rid of vertical line
 
-  var Range = ace.require('ace/range').Range
+  var Range = ace.require('ace/range').Range;
 
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //

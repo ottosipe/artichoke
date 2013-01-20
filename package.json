@@ -7,7 +7,6 @@
   },
   "dependencies": {
     "colors": "*",
-    "dropbox": "*",
     "express": "3.0.5",
     "jade": "*",
     "less-middleware": "*",

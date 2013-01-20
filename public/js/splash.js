@@ -1,7 +1,9 @@
-$('.btn').click(function(){
+$('#start').submit(function(e){
+	e.preventDefault();
 	var loc = "default";
-	if($('#link_text').val()) {
-		loc = $('#link_text').val();
+	if($('#hash').val()) {
+		loc = $('#hash').val();
 	}
+	// check if namespace is avail!
 	window.location = '/auth/' + loc + '/';
 });
