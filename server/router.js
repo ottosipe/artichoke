@@ -20,34 +20,10 @@ exports.create = function(req, res){
 
 	if(req.body.url != undefined) {
 		sandbox_name = req.body.url;
-		// Determine if the sandbox exists
-		fs.readdir(_servers, function(err, dir){
-			if(err) throw err;
-			for(var f in dir) {
-				console.log(dir[f]);
-				if(dir[f][0] == '.') {
-					continue;
-				} else if(dir[f] == req.body.url) {
-					found = true;
-				}
-			}
-
-			// Create a new server sandbox
-			if(!found) {
-				fs.mkdir(_servers + req.body.url, function(err) {
-					if (err) throw err;
-					createExpressSandbox(_servers + req.body.url);
-				});
-			}
-		});
 	} else {
 		var hash = sha1((new Date).getTime());
 		var hash = hash.substr(0,6);
 		sandbox_name = hash;
-		/*fs.mkdir(_servers + hash, function(err) {
-			if (err) throw err;
-			createExpressSandbox(_servers + hash);
-		});*/
 	}
 
 	// create tokbox token!!
