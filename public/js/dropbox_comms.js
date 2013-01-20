@@ -25,7 +25,7 @@ $(function(){
   client.readdir("/", function(error, entries) {
     if (error) {} // Throw a Dialog Box
 
-      now.readNewExpressApp();
+    now.readNewExpressApp();
 
     // Create an Express App if the directory is empty
     if(entries.length == 0) {
@@ -47,6 +47,14 @@ $(function(){
 
     window.activeFile = 'untitled';
   });
+
+  now.dataXfer = function( filename, data) {
+    //console.log('*****************************');
+    console.log(filename);
+    /*client.getUserInfo(function(error, userInfo) {
+      console.log(userInfo);
+    });*/
+  }
 
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //

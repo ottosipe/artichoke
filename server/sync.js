@@ -89,7 +89,8 @@ module.exports = function syncNowJS(httpApp){
 	// ---------------------------------------------------------- //
 
 	everyone.now.readNewExpressApp = function() {
-		console.log('cray');
+		console.log('readNewExpressApp()');
+		console.log(this.user.clientId);
 		var rootdir = './public/sample_app';
 		browse(rootdir);
 	}
@@ -103,7 +104,9 @@ module.exports = function syncNowJS(httpApp){
         			fs.lstat(path+'/'+files[i], function(err, stats) {
 		        		if(stats.isFile()) {
 		        			fs.readFile(path+'/'+files[i], 'utf-8', function(err, data) {
-			        			console.log(data);
+			        			//console.log(data);
+			        			//console.log(files[i]);
+			        			everyone.now.dataXfer(files[i], data);
 			        		});
 		        		} else if(stats.isDirectory()) {
 		        			browse(path + '/' + files[i]);
