@@ -94,25 +94,30 @@ module.exports = function syncNowJS(httpApp){
 		fs.readdir(rootdir, function(err, files) {
         	console.log(files);
         	for(i in files) {
-        		var stats = fs.lstatSync(rootdir+files[i]);
-        		if(stats.isFile()) {
-					fs.readFile(rootdir+files[i], 'utf-8', function(err, data) {
-						console.log('$$$$$$$$$$$$');
-	        			console.log(data);
-	        		});
-    			} else if(stats.isDirectory()) {
-					fs.readdir(rootdir, function(err, nested_files) {
-						for(j in nested_files) {
-							console.log('new dir -', rootdir, '+', files[i], '+ / +', nested_files[j]);
-							var nstats = fs.lstatSync(rootdir+files[i]+'/'+nested_files[j]);
-		        			/*if(nstats.isFile()) {
-								fs.readFile(rootdir+files[i]+'/'+nested_files[j], 'utf-8', function(nerr, ndata) {
-				        			console.log(ndata);
-				        		});
-				        	}*/
-					    }
-					});
-    			}
+        		(function(i){
+	        		fs.lstat(rootdir+files[i], function(err, stats) {
+		        		if(stats.isFile()) {
+							fs.readFile(rootdir+files[i], 'utf-8', function(err, data) {
+			        			console.log(data);
+			        		});
+		    			} else if(stats.isDirectory()) {
+							fs.readdir(rootdir+files[i], function(err, nested_files) {
+								for(j in nested_files) {
+									(function(j){
+										console.log('new dir -', rootdir, '+', files[i], '+ / +', nested_files[j]);
+										fs.lstat(rootdir+files[i]+'/'+nested_files[j], function(err, nstats) {
+						        			/*if(nstats.isFile()) {
+												fs.readFile(rootdir+files[i]+'/'+nested_files[j], 'utf-8', function(nerr, ndata) {
+								        			console.log(ndata);
+								        		});
+								        	}*/
+								        });
+									})(j);
+							    }
+							});
+		    			}
+		    		});
+				})(i);
         	}
       });
 	}
