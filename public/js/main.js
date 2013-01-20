@@ -119,6 +119,7 @@
 
     if (hash != sessionHash) return;
 
+    console.log(data)
     falseChange = true;
     //console.log(now.core.clientId, data.action);
     //console.log(data);
@@ -133,9 +134,11 @@
         var all = data.lines.join("\n");
         editor.session.insert(data.range.start, data.text);
     } else {
-      console.log("receive doc");
+      if(data.doc != undefined) {
+        console.log(data.doc);
 
-      editor.getSession().setValue(data.doc);
+        editor.getSession().setValue(data.doc);
+      }
     }
   }
 

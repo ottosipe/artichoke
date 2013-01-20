@@ -14,7 +14,8 @@ module.exports = function syncNowJS(httpApp){
 	// ---------------------------------------------------------- //
 
 	// Sync User List
-	everyone.now.syncPeers = function( hash, newClientId, connectFlag, cb ){
+	everyone.now.syncPeers = function( newClientId, connectFlag, cb ){
+
 		if(!connectFlag) {
 			// Update all the peers on disconnect
 			cb(data);
@@ -23,8 +24,6 @@ module.exports = function syncNowJS(httpApp){
 				console.log('syncPeers() fired with', data.users.length, 'users already here.\t', this.user.clientId);
 				data.users.push(this.user.clientId);
 				console.log('callingback, there are now', data.users.length, 'users\t\t', this.user.clientId);
-				cb(data);
-			} else {
 				cb(data);
 			}
 		}
@@ -99,10 +98,10 @@ module.exports = function syncNowJS(httpApp){
 	// ---------------------------------------------------------- //
 
 	nowjs.on('connect', function(){
+		
+		everyone.now.syncPeers(this.user.clientId, true, function(x){
 
-		console.log("connected");
-		everyone.now.syncPeers(this.user.clientId, true, function(){
-			everyone.now.updateUserList(data);
+			everyone.now.updateUserList(x);
 		});
 	});
 
@@ -113,8 +112,8 @@ module.exports = function syncNowJS(httpApp){
 		findAndRemove(data.users, this.user.clientId);
 		console.log('There are', data.users.length, 'here now.\t\t\t', this.user.clientId);
 
-		everyone.now.syncPeers(this.user.clientId, false, function(){
-			everyone.now.updateUserList(data);
+		everyone.now.syncPeers(this.user.clientId, false, function(x){
+			everyone.now.updateUserList(x);
 		});
 	});
 
