@@ -93,8 +93,8 @@ $(function(){
     window.users = clientList;
     console.log(window.users);
 
-    window.userID = this.core.clientId;
-    console.log('you', userID)
+    //window.userID = this.core.clientId;
+    //console.log('you', userID) //***
 
   }
 
