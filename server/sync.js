@@ -59,8 +59,7 @@ module.exports = function syncNowJS(httpApp){
 			console.log("new room, new user")
 			sessions[hash] = {
 				users: [id],
-				master: id,
-				tokboxToken: ""
+				master: id
 			}
 		} else {
 			console.log("same room, new user")

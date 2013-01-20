@@ -18,7 +18,7 @@ $(function(){
 
   var sessionHash = window.location.pathname;
   var cut = sessionHash.lastIndexOf("/") + 1;
-  sessionHash = sessionHash.substr(cut, sessionHash.length);
+  window.sessionHash = sessionHash.substr(cut, sessionHash.length);
 
 
   // ---------------------------------------------------------- //
