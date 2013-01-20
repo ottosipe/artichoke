@@ -208,6 +208,15 @@ $(function(){
   });
 
   editor.commands.addCommand({
+    name: 'newFile',
+    bindKey: {win: 'Ctrl-X',  mac: 'Command-X'},
+    exec: function(editor) {
+        $('#hash').focus();
+    },
+    readOnly: false // not for readOnly mode
+  });
+
+  editor.commands.addCommand({
     name: 'shift',
     bindKey: {win: 'Shift-Enter',  mac: 'Shift-Enter'},
     exec: function(editor) {
