@@ -14,7 +14,7 @@ module.exports = function syncNowJS(httpApp){
 	// ---------------------------------------------------------- //
 
 	// Sync User List
-	everyone.now.syncPeers = function( newClientId, connectFlag, cb ){
+	everyone.now.syncPeers = function( hash, newClientId, connectFlag, cb ){
 		if(!connectFlag) {
 			// Update all the peers on disconnect
 			cb(data);
@@ -29,25 +29,25 @@ module.exports = function syncNowJS(httpApp){
 	};
 
 	// Sync Cursor
-	everyone.now.syncCursors = function( loc, clientId ){
+	everyone.now.syncCursors = function( loc, clientId, hash ){
 		if(this.user.clientId != clientId) {
-			this.now.updateCursor(loc);
+			this.now.updateCursor(loc, hash);
 		}
 	};
 
-	everyone.now.pushCursor = function( loc ){
+	everyone.now.pushCursor = function( loc, hash ){
 		everyone.now.syncCursors(loc, this.user.clientId);
 	};
 
 	// Sync Text
-	everyone.now.syncText = function( textData, clientId ){
+	everyone.now.syncText = function( textData, clientId, hash ){
 		if(this.user.clientId != clientId) {
-			this.now.updateText(textData);
+			this.now.updateText(textData, hash);
 		}
 	};
 
-	everyone.now.pushText = function( textData ){
-		everyone.now.syncText(textData, this.user.clientId);
+	everyone.now.pushText = function( textData, hash ){
+		everyone.now.syncText(textData, this.user.clientId, hash );
 	};
 
 	// ---------------------------------------------------------- //

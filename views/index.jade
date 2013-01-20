@@ -18,4 +18,11 @@ block append content
 			a.btn change file
 		| 
 		.btn-group
-			a.btn invite friends
+			a.btn#addFriend invite friend
+	
+	.hide
+		#addFriendHTML
+			.input-append
+				input(type="email")
+				a.btn send
+		#fileBrowse
