@@ -35,15 +35,14 @@ $(function(){
 
   $('#pencil').click(newFileHandler);
 
-  $('.icon-hdd').click(function(){
-    now.dropboxSaveFile(window.activeFile, editor.getSession().getValue(), function() {
-      $('#disconnect_notifier').text('Saved.');
-      $('#disconnect_notifier').fadeIn('slow');
-      $('#disconnect_notifier').delay(1500).fadeOut('slow');
-    });
+  $('#hdd').click(function(){
+    $('#disconnect_notifier').text('Saved.');
+    $('#disconnect_notifier').fadeIn('fast');
+    $('#disconnect_notifier').delay(1500).fadeOut('slow');
+    now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
   });
 
-  $('.icon-trash').click(function(){
+  $('#trash').click(function(){
     now.dropboxDeleteFile(window.activeFilePath);
   });
 
@@ -57,6 +56,11 @@ $(function(){
     if($('#hash').val()) {
       editor.getSession().setValue('');
       window.activeFile = $('#hash').val();
+      if($('#hash').val()[0] != '/') {
+        $('#filepath').text('/'+$('#hash').val());
+      } else {
+        $('#filepath').text($('#hash').val());
+      }
       now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
       now.dropboxOpenFile(window.activeFile);      
     }

@@ -45,11 +45,11 @@ $(function(){
       } else {
         now.dropboxSaveFile(filename, '');
       }
-      $('#filepath').text(window.activeFilePath);
     });
   }
 
   now.dropboxDeleteFile = function( path ) {
+    console.log(path);
     client.remove(path, function(a, b){
       console.log(a);
       console.log(b);
