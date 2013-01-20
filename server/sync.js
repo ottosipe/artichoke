@@ -24,6 +24,8 @@ module.exports = function syncNowJS(httpApp){
 				data.users.push(this.user.clientId);
 				console.log('callingback, there are now', data.users.length, 'users\t\t', this.user.clientId);
 				cb(data);
+			} else {
+				cb(data);
 			}
 		}
 	};
