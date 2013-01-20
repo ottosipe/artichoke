@@ -25,7 +25,6 @@ $(function(){
   client.readdir("/", function(error, entries) {
     if (error) {} // Throw a Dialog Box
 
-      //console.log(now);
       now.readNewExpressApp();
 
     // Create an Express App if the directory is empty
