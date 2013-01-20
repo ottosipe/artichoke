@@ -4,7 +4,7 @@ $(function(){
   window.users = [];
   window.cursors = {};
   window.files = [];
-  window.activeFile;
+  window.activeFile; // update this when in a new File
 
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/monokai");
@@ -13,6 +13,9 @@ $(function(){
   editor.setShowPrintMargin(false); // got rid of vertical line
 
   var Range = ace.require('ace/range').Range;
+
+  // ---------------------------------------------------------- //
+  // ---------------------------------------------------------- //
 
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //
@@ -69,6 +72,12 @@ $(function(){
   // ---------------------------------------------------------- //
   // Popup Notifiers for connection actions
   // ---------------------------------------------------------- //
+
+  now.core.on('connect', function() {
+    $('#host').text();
+    $('#host').text(now.core.clientId);
+    console.log(now.core.clientId);
+  });
 
   now.core.on('disconnect', function(){
     console.log('Client disconnected.');
@@ -163,38 +172,14 @@ $(function(){
     readOnly: false // not for readOnly mode
   });
 
-  // ---------------------------------------------------------- //
-  // Dropbox Interface with Host User
-  // ---------------------------------------------------------- //
-
-  var client = new Dropbox.Client({
-    key: "0cYNdp0TWTA=|hn+SflkP/HQsDzXT6c9Fl7GLhbeo1ovUMiiIr3lHbQ==", sandbox: true
+  editor.commands.addCommand({
+    name: 'disablePaste',
+    bindKey: {win: 'Ctrl-V',  mac: 'Command-V'},
+    exec: function(editor) {
+      //MT
+    },
+    readOnly: false // not for readOnly mode
   });
-  client.authDriver(new Dropbox.Drivers.Redirect({rememberUser: true}));
-
-  // Error Handling Logging
-  client.onError.addListener(function(error) {
-      console.error(error);
-  });
-
-  client.authenticate(function(error, client) {
-      if (error) {
-        // Throw a Dialog Box
-      }
-      console.log("Auth'd with Dropbox!");
-  });
-
-  client.readdir("/", function(error, entries) {
-    if (error) {
-      return showError(error);  // Something went wrong.
-    }
-
-    window.files = entries;
-    console.log("Your Dropbox contains " + entries.join(", "));
-  });
-
-  // ---------------------------------------------------------- //
-  // ---------------------------------------------------------- //
 
 });
 

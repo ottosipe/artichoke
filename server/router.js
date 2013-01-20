@@ -5,6 +5,8 @@ var email  = require("./email.js")
 var _servers = __dirname+"/../public/servers/";	
 var userServer;
 
+var hosts = {};
+
 // auth page
 exports.auth = function(req, res) {
 	console.log(req.params.id);
@@ -29,12 +31,6 @@ exports.create = function(req, res){
 	// create tokbox token!!
 	res.send(sandbox_name);
 };
-
-// Create the entire directory for the user when they create a new sandbox
-function createExpressSandbox( filepath ){
-	//fs.writeFile(filepath + "/app.js", "console.log('hello node!');");
-}
-
 
 // room page
 exports.edit = function(req, res){

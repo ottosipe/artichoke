@@ -1,4 +1,5 @@
-var nowjs 	  = require( "now" );
+var nowjs = require( "now" )
+	, fs = require('fs');
 
 // Create a local memory space for further now-configuration.
 module.exports = function syncNowJS(httpApp){
@@ -84,5 +85,14 @@ module.exports = function syncNowJS(httpApp){
 	});
 
 	// ---------------------------------------------------------- //
-	// ---------------------------------------------------------- //	
+	// Dropbox Pipiing
+	// ---------------------------------------------------------- //
+
+	everyone.now.readNewExpressApp = function() {
+		console.log('cray');
+		fs.readdir('./public/sample_app/', function(err, files) {
+        	console.log(files);
+      });
+	}
+
 }
