@@ -24,7 +24,7 @@ sync(httpApp);
 // define API routes here
 app.get('/', router.splash);
 app.get('/edit/:hash', router.edit);
-
+app.get('/:hash/tokbox', router.tokbox);
 
 app.post('/create', router.create);
 
