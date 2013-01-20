@@ -5,6 +5,8 @@ var email  = require("./email.js")
 var _servers = __dirname+"/../public/servers/";	
 var userServer;
 
+var hosts = {};
+
 // auth page
 exports.auth = function(req, res) {
 	console.log(req.params.id);
@@ -32,7 +34,11 @@ exports.create = function(req, res){
 
 // room page
 exports.edit = function(req, res){
-	res.render('index', { title: 'Artichoke' });
+	if(true) {
+		res.render('index', { title: 'Artichoke', host: true });
+	} else {
+		res.render('index', { title: 'Artichoke', host: false });
+	}
 };
 
 // main page

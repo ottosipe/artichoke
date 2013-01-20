@@ -73,6 +73,12 @@ $(function(){
   // Popup Notifiers for connection actions
   // ---------------------------------------------------------- //
 
+  now.core.on('connect', function() {
+    $('#host').text();
+    $('#host').text(now.core.clientId);
+    console.log(now.core.clientId);
+  });
+
   now.core.on('disconnect', function(){
     console.log('Client disconnected.');
     $('#disconnect_notifier').text('Disconnected from the Server...').fadeIn('slow');
@@ -165,55 +171,6 @@ $(function(){
     },
     readOnly: false // not for readOnly mode
   });
-
-  // ---------------------------------------------------------- //
-  // Dropbox Interface with Host User
-  // ---------------------------------------------------------- //
-
-  var client = new Dropbox.Client({
-    key: "0cYNdp0TWTA=|hn+SflkP/HQsDzXT6c9Fl7GLhbeo1ovUMiiIr3lHbQ==", sandbox: true
-  });
-  client.authDriver(new Dropbox.Drivers.Redirect({rememberUser: true}));
-
-  // Error Handling Logging
-  client.onError.addListener(function(error) {
-      console.error(error);
-  });
-
-  client.authenticate(function(error, client) {
-      if (error) {
-        // Throw a Dialog Box
-      }
-      console.log("Auth'd with Dropbox!");
-  });
-
-
-  client.getUserInfo(function(error, userInfo) {
-    console.log(userInfo);
-  });
-
-  client.readdir("/", function(error, entries) {
-    if (error) {
-      // Throw a Dialog Box
-    }
-
-    // Create an Express App if the directory is empty
-    console.log('entries!!');
-    console.log(entries.length);
-    if(entries.length == 0) {
-      client.writeFile('app.js', 'var app = express();', function(error, stat) {
-        console.log('app.js stat');
-        console.log(stat);
-      });
-    }
-
-    window.files = entries;
-    window.activeFile = 'untitled';
-    console.log("Your Dropbox contains " + entries.join(", "));
-  });
-
-  // ---------------------------------------------------------- //
-  // ---------------------------------------------------------- //
 
 });
 

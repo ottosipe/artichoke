@@ -1,0 +1,15 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "supervisor server"
+  },
+  "dependencies": {
+    "express": "3.0.5",
+    "jade": "*",
+    "less-middleware": "*",
+    "mongodb": "*",
+    "nodemailer": "*"
+  }
+}

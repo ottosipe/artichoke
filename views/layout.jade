@@ -7,8 +7,7 @@ html
     title Editor
     link(rel='stylesheet', href='/css/bootstrap.min.css')
     link(rel='stylesheet', href='/css/style.css')
-    script(src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.8.1/dropbox.min.js")
-    //link(rel='stylesheet', href='/css/bootstrap-responsive.min.css')
+    block header
 
   body
     block content
@@ -17,7 +16,6 @@ html
   script(src='/js/ace-src/ace.js', type='text/javascript', charset='utf-8')
   script(src="/nowjs/now.js")
   script(src="/js/underscore-min.js")
-  //script(src="/js/backbone-min.js")
 
   script(src="/js/main.js")
   script(src='https://swww.tokbox.com/webrtc/v2.0/js/TB.min.js', type='text/javascript', charset='utf-8')

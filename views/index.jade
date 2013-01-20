@@ -1,6 +1,13 @@
 extends layout
 
-block content
+block append header
+	- if (host)
+		script(src="//cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.8.1/dropbox.min.js")
+		script(src="/js/dropbox_comms.js")
+
+	- console.log('THIS IS HOST')
+
+block append content
 	.center
 		span#disconnect_notifier hello there
 	#header Artichoke - an editor for node.js 
@@ -10,3 +17,5 @@ block content
 	#youtokbox.tokbox
 	#tokboxes
 	#footer
+		#host_txt(style='display:inline-block') host: 
+		#host(style='display:inline-block; margin-left:5px;')
