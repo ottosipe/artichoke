@@ -40,8 +40,8 @@ exports.create = function(req, res){
 			// Create a new server sandbox
 			if(!found) {
 				fs.mkdir(_servers + req.body.url, function(err) {
-					if (err) throw err
-					fs.writeFile(_servers + req.body.url + "/app.js", "console.log('hello node!');");
+					if (err) throw err;
+					createExpressSandbox(_servers + req.body.url);
 				});
 			}
 		});
@@ -50,14 +50,19 @@ exports.create = function(req, res){
 		var hash = hash.substr(0,6);
 		sandbox_name = hash;
 		fs.mkdir(_servers + hash, function(err) {
-			if (err) throw err
-			fs.writeFile(_servers + hash + "/app.js", "console.log('hello node!');");
+			if (err) throw err;
+			createExpressSandbox(_servers + hash);
 		});
 	}
 
 	// create tokbox token!!
 	res.send(sandbox_name);
 };
+
+// Create the entire directory for the user when they create a new sandbox
+function createExpressSandbox( filepath ){
+	fs.writeFile(filepath + "/app.js", "console.log('hello node!');");
+}
 
 // db test
 exports.db = function(req, res){
