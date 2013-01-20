@@ -28,3 +28,5 @@ app.get('/:hash/tokbox', router.tokbox);
 app.post('/create', router.create);
 
 app.get('/auth/:id', router.auth);
+
+app.post('/email', router.email)

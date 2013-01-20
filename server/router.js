@@ -35,11 +35,19 @@ exports.create = function(req, res){
 };
 
 // room page
+exports.email = function(req, res){
+	email.send(req.body, 'template.jade', function(data) {
+		res.send(data);
+	})
+};
+
+// room page
 exports.edit = function(req, res){
 
 	res.render('index');
 
 };
+
 
 // main page
 exports.splash = function(req, res){

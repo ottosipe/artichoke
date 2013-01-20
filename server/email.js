@@ -5,7 +5,7 @@ var nodemailer = require("nodemailer"),
 
 // create reusable transport method (opens pool of SMTP connections)
 var smtpTransport = nodemailer.createTransport("SMTP", {
-    service: "Mandrill",
+    service: "SendGrid",
     auth: secret.email // {user,pass}
 });
 
@@ -15,11 +15,12 @@ exports.send = function sendMail(user, temp, cb) {
     var template = jade.compile(fs.readFileSync(__dirname+'/email/' + temp, 'utf8'));
     var html = template({
         name: user.name,
-        email: user.email
+        email: user.email,
+        hash: user.hash
     });
 
     var opts = {
-        from: "This Website <email@domain.com>", // sender address
+        from: "Artichoke <do-not-reply@artichokedit.com>", // sender address
         to: user.name+" <"+user.email+">", // list of receivers
         subject: "Testing...", // Subject line
         html: html, // html body

@@ -7,8 +7,8 @@ module.exports = Object.freeze({
 		name: "ottosipe"
 	}, 
 	email: {
-        user: "ottosipe@gmail.com",
-        pass: "cedb08cc-a0ed-42cd-9cbe-fbb9b0ab2a8f"
+        user: "artichoke",
+        pass: "artichoke"
     },
     admin: {
     	user: "user",

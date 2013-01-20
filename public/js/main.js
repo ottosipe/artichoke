@@ -24,6 +24,16 @@
   // Continually flush changes to DropBox
   // ---------------------------------------------------------- //
 
+$(function(){
+  $("#addFriend").click(function() {
+    var email = prompt("Add your friend!")
+    $.post("/email", {email: email, name: "your friend", hash: sessionHash}, function(data) {
+      console.log("added friend")
+    }) 
+  })
+})
+
+
   setInterval(function(){
     //console.log('auto-save');
     //$('#filepath').css('color', 'green');
