@@ -25,11 +25,12 @@ $(function(){
   // Button Handlers
   // ---------------------------------------------------------- //
 
-  $('.icon-pencil').click(function(){
+  $('#pencil').click(function(){
     console.log('cllcikkkyyypencil');
     console.log($('#hash').val());
     if($('#hash').val()) {
       console.log(window.activeFile);
+      console.log(now)
       now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
       window.activeFile = $('#hash').val();
       now.dropboxOpenFile(window.activeFile);
