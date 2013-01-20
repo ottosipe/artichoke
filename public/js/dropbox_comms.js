@@ -1,3 +1,4 @@
+$(function(){ 
   // ---------------------------------------------------------- //
   // Dropbox Interface with Host User
   // ---------------------------------------------------------- //
@@ -24,10 +25,12 @@
   client.readdir("/", function(error, entries) {
     if (error) {} // Throw a Dialog Box
 
+      //console.log(now);
+      now.readNewExpressApp();
+
     // Create an Express App if the directory is empty
     if(entries.length == 0) {
-
-      client.writeFile('app.js', 'var app = express();', function(error, stat) {
+      /*client.writeFile('app.js', 'var app = express();', function(error, stat) {
         console.log('app.js stat');
         console.log(stat);
       });
@@ -36,7 +39,7 @@
         if (error) {} // Throw a Dialog Box
         window.files = entries;
         console.log("Your Dropbox contains " + entries.join(", "));
-      });
+      });*/
 
     } else {
       window.files = entries;
@@ -48,3 +51,4 @@
 
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //
+});
