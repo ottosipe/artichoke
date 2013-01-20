@@ -5,7 +5,6 @@ var express   = require('express')
   , router    = require('./router.js')
   , config    = require('./config.js')
   , http      = require('http')
-  , Dropbox   = require('dropbox')
   , sha1      = require('sha1')
   , sync  = require('./sync.js');
 
