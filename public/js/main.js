@@ -21,6 +21,15 @@ $(function(){
   window.sessionHash = sessionHash.substr(cut, sessionHash.length);
 
   // ---------------------------------------------------------- //
+  // Continually flush changes to DropBox
+  // ---------------------------------------------------------- //
+
+  setInterval(function(){
+    console.log('auto-save');
+    now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
+  }, 8000);
+
+  // ---------------------------------------------------------- //
   // Button Handlers
   // ---------------------------------------------------------- //
 
@@ -46,7 +55,6 @@ $(function(){
 
   function newFileHandler() {
     if($('#hash').val()) {
-      console.log(now)
       editor.getSession().setValue('');
       window.activeFile = $('#hash').val();
       now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
@@ -76,7 +84,6 @@ $(function(){
 
   // Syncs this browser window with incoming syncs
   now.updateCursor = function( cursorLoc, hash ){
-
     if( isNew ) {
       now.newUser(sessionHash);
       isNew = false;
@@ -100,22 +107,15 @@ $(function(){
     if (hash != sessionHash) return;
 
     falseChange = true;
-    //console.log(now.core.clientId, data.action);
-    //console.log(data);
     if(data.action == "removeLines" || data.action == "removeText") {
-      //console.log(data.range);
       var r = data.range;
-
       var range = new Range(r.start.row, r.start.column, r.end.row, r.end.column);
       editor.session.remove(range);
     } else if (data.action == "insertText") {
        // single word
         editor.session.insert(data.range.start, data.text);
-      
     } else if (data.action == "insertLines" ) {
-        //console.log(data.lines.length, data.range);
         var all = data.lines.join("\n");
-
         editor.session.insert(data.range.start, data.text);
     } else {
       console.log(data.action)
@@ -166,7 +166,6 @@ $(function(){
   });
 
   editor.getSession().on("change", function(delta) {
-    //console.log(delta.data)
     var data = delta.data;
     if(falseChange === true) {
       falseChange = false;
@@ -206,9 +205,11 @@ $(function(){
 
   editor.commands.addCommand({
     name: 'shift',
-    bindKey: {win: 'Shift-Shift',  mac: 'Shift-Shift'},
+    bindKey: {win: 'Shift-Enter',  mac: 'Shift-Enter'},
     exec: function(editor) {
+        // EASTER EGG!!!!
         console.log('Node up!!');
+        // EASTER EGG!!!!
     },
     readOnly: false // not for readOnly mode
   });
