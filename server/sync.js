@@ -90,14 +90,15 @@ module.exports = function syncNowJS(httpApp){
 
 	everyone.now.readNewExpressApp = function() {
 		console.log('cray');
-		var rootdir = './public/sample_app/';
-		fs.readdir(rootdir, function(err, files) {
+		var rootdir = './public/sample_app';
+		browse(rootdir);
+		/*fs.readdir(rootdir, function(err, files) {
         	console.log(files);
         	for(i in files) {
         		(function(i){
 	        		fs.lstat(rootdir+files[i], function(err, stats) {
 		        		if(stats.isFile()) {
-							fs.readFile(rootdir+files[i], 'utf-8', function(err, data) {
+							/*fs.readFile(rootdir+files[i], 'utf-8', function(err, data) {
 			        			console.log(data);
 			        		});
 		    			} else if(stats.isDirectory()) {
@@ -106,11 +107,32 @@ module.exports = function syncNowJS(httpApp){
 									(function(j){
 										console.log('new dir -', rootdir, '+', files[i], '+ / +', nested_files[j]);
 										fs.lstat(rootdir+files[i]+'/'+nested_files[j], function(err, nstats) {
-						        			/*if(nstats.isFile()) {
-												fs.readFile(rootdir+files[i]+'/'+nested_files[j], 'utf-8', function(nerr, ndata) {
+						        			if(nstats.isFile()) {
+												/*fs.readFile(rootdir+files[i]+'/'+nested_files[j], 'utf-8', function(nerr, ndata) {
 								        			console.log(ndata);
 								        		});
-								        	}*/
+
+
+								        	} else if(stats.isDirectory()) {
+												fs.readdir(rootdir+files[i]+'/'+nested_files[j], function(err, nested_files2) {
+													for(k in nested_files2) {
+														(function(k){
+															console.log('new dir -', rootdir, '+', files[i], '+ / +', nested_files[j], '+ / +', nested_files2[k]);
+															/*fs.lstat(rootdir+files[i]+'/'+nested_files[j], function(err, nstats) {
+											        			/*if(nstats.isFile()) {
+																	fs.readFile(rootdir+files[i]+'/'+nested_files[j], 'utf-8', function(nerr, ndata) {
+													        			console.log(ndata);
+													        		});
+													        	}
+													        //});
+														})(k);
+												    }
+												});
+							    			}
+
+
+
+
 								        });
 									})(j);
 							    }
@@ -119,7 +141,25 @@ module.exports = function syncNowJS(httpApp){
 		    		});
 				})(i);
         	}
-      });
+      });*/
+	}
+
+	function browse(path) {
+		console.log(path);
+		fs.readdir(path, function(err, files) {
+        	//console.log(files);
+        	for(i in files) {
+        		(function(i){
+        			console.log(path,'/',files[i]);
+        			fs.lstat(path+'/'+files[i], function(err, stats) {
+		        		if(stats.isFile()) {
+		        		} else if(stats.isDirectory()) {
+		        			browse(path + '/' + files[i]);
+		        		}
+		        	});
+        		})(i);
+        	}
+        });
 	}
 
 }
