@@ -25,7 +25,13 @@ $(function(){
   // ---------------------------------------------------------- //
 
   setInterval(function(){
-    console.log('auto-save');
+    //console.log('auto-save');
+    //$('#filepath').css('color', 'green');
+    $('#filepath').fadeOut('fast');
+    setTimeout(function(){
+      //$('#filepath').css('color', 'white');
+      $('#filepath').fadeIn('fast');
+    }, 300);
     now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
   }, 8000);
 
