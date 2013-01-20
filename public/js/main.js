@@ -1,12 +1,12 @@
 $(function(){ 
-  
   var falseChange = false;
   var isNew = true;
 
   window.users = [];
   window.cursors = {};
   window.files = [];
-  window.activeFile; // update this when in a new File
+  window.activeFile;
+  window.activeFilePath;
 
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/monokai");
@@ -20,32 +20,39 @@ $(function(){
   var cut = sessionHash.lastIndexOf("/") + 1;
   window.sessionHash = sessionHash.substr(cut, sessionHash.length);
 
-
   // ---------------------------------------------------------- //
   // Button Handlers
   // ---------------------------------------------------------- //
 
-  $('#pencil').click(function(){
-    console.log('cllcikkkyyypencil');
-    console.log($('#hash').val());
-    if($('#hash').val()) {
-      console.log(window.activeFile);
-      console.log(now)
-      now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
-      window.activeFile = $('#hash').val();
-      now.dropboxOpenFile(window.activeFile);
-      $('#filepath').text(window.activeFile);
-      editor.getSession().setValue('');
-    }
-  });
+  $('#pencil').click(newFileHandler);
 
   $('.icon-hdd').click(function(){
-    console.log('cllcikkkyyyhdd');
+    now.dropboxSaveFile(window.activeFile, editor.getSession().getValue(), function() {
+      $('#disconnect_notifier').text('Saved.');
+      $('#disconnect_notifier').fadeIn('slow');
+      $('#disconnect_notifier').delay(1500).fadeOut('slow');
+    });
   });
 
   $('.icon-trash').click(function(){
-    console.log('cllcikkkyyytrash');
+    now.dropboxDeleteFile(window.activeFilePath);
   });
+
+  $('#hash').keypress(function(btn) {
+    if(btn.keyCode == 13) {
+      newFileHandler();
+    }
+  });
+
+  function newFileHandler() {
+    if($('#hash').val()) {
+      console.log(now)
+      editor.getSession().setValue('');
+      window.activeFile = $('#hash').val();
+      now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
+      now.dropboxOpenFile(window.activeFile);      
+    }
+  }
 
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //
@@ -120,9 +127,7 @@ $(function(){
   // ---------------------------------------------------------- //
 
   now.core.on('connect', function() {
-
     console.log(now.core.clientId);
-
   });
 
   now.core.on('disconnect', function(){
@@ -182,11 +187,10 @@ $(function(){
     name: 'save',
     bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
     exec: function(editor) {
-        now.dropboxSaveFile(window.activeFile, editor.getSession().getValue(), function() {
-          $('#disconnect_notifier').text('Saved.');
-          $('#disconnect_notifier').fadeIn('slow');
-          $('#disconnect_notifier').delay(1500).fadeOut('slow');
-        });
+        $('#disconnect_notifier').text('Saved.');
+        $('#disconnect_notifier').fadeIn('slow');
+        $('#disconnect_notifier').delay(1500).fadeOut('slow');
+        now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
     },
     readOnly: false // not for readOnly mode
   });
@@ -219,8 +223,6 @@ $(function(){
   });
 
   now.overwriteEditor = function(filedata) {
-    console.log('CALLLBACKKKK');
-    console.log(filedata);
     editor.getSession().setValue(filedata);
   }
 
