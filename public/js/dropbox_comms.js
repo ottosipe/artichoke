@@ -40,16 +40,18 @@ $(function(){
       if(files.length > 0 && files[0].isFile == true) {
         window.activeFilePath = files[0].path;
         client.readFile(files[0].path, { "httpCache": "true"}, function(e, filedata) {
+          console.log('overwriteEditor!');
           now.overwriteEditor(filedata);
         });
       } else {
+        window.activeFilePath = filename;
         now.dropboxSaveFile(filename, '');
       }
-      $('#filepath').text(window.activeFilePath);
     });
   }
 
   now.dropboxDeleteFile = function( path ) {
+    console.log(path);
     client.remove(path, function(a, b){
       console.log(a);
       console.log(b);
@@ -61,24 +63,15 @@ $(function(){
 
   client.readdir("/", function(error, entries) {
     if (error) {} // Throw a Dialog Box
-
-    // Create an Express App if the directory is empty
-    if(entries.length == 0) {
-      now.readNewExpressApp();
-
-      client.readdir("/", function(error, entries) {
-        if (error) {} // Throw a Dialog Box
-        window.files = entries;
-        console.log("Your Dropbox contains " + entries.join(", "));
-      });
-
-    } else {
-      window.files = entries;
-      console.log("Your Dropbox contains " + entries.join(", "));
-    }
-
     window.activeFile = 'README';
     window.activeFilePath = '/README'
+
+    now.dropboxOpenFile('README', function(a, b){
+        console.log(a);
+        console.log(b);
+    });
+    window.files = entries;
+    console.log("Your Dropbox contains " + entries.join(", "));
   });
 
   // ---------------------------------------------------------- //

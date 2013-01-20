@@ -21,20 +21,34 @@
   window.sessionHash = sessionHash.substr(cut, sessionHash.length);
 
   // ---------------------------------------------------------- //
+  // Continually flush changes to DropBox
+  // ---------------------------------------------------------- //
+
+  setInterval(function(){
+    //console.log('auto-save');
+    //$('#filepath').css('color', 'green');
+    $('#filepath').fadeOut('fast');
+    setTimeout(function(){
+      //$('#filepath').css('color', 'white');
+      $('#filepath').fadeIn('fast');
+    }, 300);
+    now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
+  }, 8000);
+
+  // ---------------------------------------------------------- //
   // Button Handlers
   // ---------------------------------------------------------- //
 
   $('#pencil').click(newFileHandler);
 
-  $('.icon-hdd').click(function(){
-    now.dropboxSaveFile(window.activeFile, editor.getSession().getValue(), function() {
-      $('#disconnect_notifier').text('Saved.');
-      $('#disconnect_notifier').fadeIn('slow');
-      $('#disconnect_notifier').delay(1500).fadeOut('slow');
-    });
+  $('#hdd').click(function(){
+    $('#disconnect_notifier').text('Saved.');
+    $('#disconnect_notifier').fadeIn('fast');
+    $('#disconnect_notifier').delay(1500).fadeOut('slow');
+    now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
   });
 
-  $('.icon-trash').click(function(){
+  $('#trash').click(function(){
     now.dropboxDeleteFile(window.activeFilePath);
   });
 
@@ -46,9 +60,13 @@
 
   function newFileHandler() {
     if($('#hash').val()) {
-      console.log(now)
       editor.getSession().setValue('');
       window.activeFile = $('#hash').val();
+      if($('#hash').val()[0] != '/') {
+        $('#filepath').text('/'+$('#hash').val());
+      } else {
+        $('#filepath').text($('#hash').val());
+      }
       now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
       now.dropboxOpenFile(window.activeFile);      
     }
@@ -78,7 +96,6 @@
 
   // Syncs this browser window with incoming syncs
   now.updateCursor = function( cursorLoc, hash ){
-
     if( isNew ) {
       now.newUser(sessionHash);
       isNew = false;
@@ -105,19 +122,14 @@
     //console.log(now.core.clientId, data.action);
     //console.log(data);
     if(data.action == "removeLines" || data.action == "removeText") {
-      //console.log(data.range);
       var r = data.range;
-
       var range = new Range(r.start.row, r.start.column, r.end.row, r.end.column);
       editor.session.remove(range);
     } else if (data.action == "insertText") {
        // single word
         editor.session.insert(data.range.start, data.text);
-      
     } else if (data.action == "insertLines" ) {
-        //console.log(data.lines.length, data.range);
         var all = data.lines.join("\n");
-
         editor.session.insert(data.range.start, data.text);
     } else {
       console.log(data.action)
@@ -168,7 +180,6 @@
   });
 
   editor.getSession().on("change", function(delta) {
-    //console.log(delta.data)
     var data = delta.data;
     if(falseChange === true) {
       falseChange = false;
@@ -207,10 +218,21 @@
   });
 
   editor.commands.addCommand({
-    name: 'shift',
-    bindKey: {win: 'Shift-Shift',  mac: 'Shift-Shift'},
+    name: 'newFile',
+    bindKey: {win: 'Ctrl-X',  mac: 'Command-X'},
     exec: function(editor) {
+        $('#hash').focus();
+    },
+    readOnly: false // not for readOnly mode
+  });
+
+  editor.commands.addCommand({
+    name: 'shift',
+    bindKey: {win: 'Shift-Enter',  mac: 'Shift-Enter'},
+    exec: function(editor) {
+        // EASTER EGG!!!!
         console.log('Node up!!');
+        // EASTER EGG!!!!
     },
     readOnly: false // not for readOnly mode
   });
