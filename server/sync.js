@@ -118,7 +118,6 @@ module.exports = function syncNowJS(httpApp){
 	// ---------------------------------------------------------- //
 
 	everyone.now.readNewExpressApp = function() {
-
 		console.log('readNewExpressApp()');
 		console.log(this.user.clientId);
 		var rootdir = './public/sample_app';
