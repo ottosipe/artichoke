@@ -44,10 +44,10 @@ exports.create = function(req, res){
 		var hash = sha1((new Date).getTime());
 		var hash = hash.substr(0,6);
 		sandbox_name = hash;
-		fs.mkdir(_servers + hash, function(err) {
+		/*fs.mkdir(_servers + hash, function(err) {
 			if (err) throw err;
 			createExpressSandbox(_servers + hash);
-		});
+		});*/
 	}
 
 	// create tokbox token!!
@@ -56,28 +56,17 @@ exports.create = function(req, res){
 
 // Create the entire directory for the user when they create a new sandbox
 function createExpressSandbox( filepath ){
-	fs.writeFile(filepath + "/app.js", "console.log('hello node!');");
+	//fs.writeFile(filepath + "/app.js", "console.log('hello node!');");
 }
 
 
 // room page
 exports.edit = function(req, res){
-
-	fs.readFile(_servers+req.params.hash+"/app.js", function(err, data) {
-		if (err) {
-			res.send(err);
-		} else {
-			res.render('index', { title: 'Artichoke' }); // make these post reqs.
-		}
-	})	
-};
-
-exports.save = function(req, res){
-	//console.log(req.body.doc)
-	fs.writeFile(_servers + req.params.hash + "/app.js", req.body.doc ,function() {
-		res.send("saved")
-		
-	});
+	if (err) {
+		res.send(err);
+	} else {
+		res.render('index', { title: 'Artichoke' });
+	}
 };
 
 // main page
