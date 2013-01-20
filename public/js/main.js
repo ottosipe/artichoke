@@ -19,7 +19,7 @@
   var sessionHash = window.location.pathname;
   var cut = sessionHash.lastIndexOf("/") + 1;
   window.sessionHash = sessionHash.substr(cut, sessionHash.length);
-
+  window.userID;
   // ---------------------------------------------------------- //
   // Continually flush changes to DropBox
   // ---------------------------------------------------------- //
@@ -78,7 +78,8 @@ $(function(){
         $('#filepath').text($('#hash').val());
       }
       now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
-      now.dropboxOpenFile(window.activeFile);      
+      now.dropboxOpenFile(window.activeFile); 
+      //falseChange = true; // ***     
     }
   }
 
@@ -92,8 +93,9 @@ $(function(){
     window.users = clientList;
     console.log(window.users);
 
-    now.sendDoc( editor.getSession().getValue(), sessionHash );
-    console.log('sent doc')
+    window.userID = this.core.clientId;
+    console.log('you', userID)
+
   }
 
   now.removeZombieCursor = function( id ) {
@@ -147,7 +149,8 @@ $(function(){
       if(data.doc != undefined) {
         console.log(data.doc);
 
-        editor.getSession().setValue(data.doc);
+//        editor.getSession().setValue(data.doc);
+        //falseChange = true; //***
       }
     }
   }
@@ -157,7 +160,8 @@ $(function(){
   // ---------------------------------------------------------- //
 
   now.core.on('connect', function() {
-    console.log(now.core.clientId);
+    console.log("you're connected");
+
   });
 
   now.core.on('disconnect', function(){
@@ -221,6 +225,15 @@ $(function(){
         $('#disconnect_notifier').fadeIn('slow');
         $('#disconnect_notifier').delay(1500).fadeOut('slow');
         now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
+
+        /*now.sendDoc( editor.getSession().getValue(), sessionHash , function(textData, hash, id) {
+          if(id != userID && sessionHash == hash) {
+            console.log(id, hash, textData.doc);
+            editor.getSession().setValue(textData.doc);
+          }
+        });
+       falseChange = true; */ //***
+
     },
     readOnly: false // not for readOnly mode
   });

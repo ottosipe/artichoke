@@ -54,13 +54,14 @@ module.exports = function syncNowJS(httpApp){
 		everyone.now.syncText(textData, this.user.clientId, hash );
 	};
 
-	everyone.now.sendDoc = function( doc, hash ) {
+	everyone.now.sendDoc = function( doc, hash , cb) {
 		var textData = { 
 			action: "wholeDoc",
 			doc: doc
 		}
 		console.log("sending doc", doc)
 		everyone.now.syncText(textData, this.user.clientId, hash );
+		cb(textData, hash, this.user.clientId);
 	}
 
 	var sessions = {}
@@ -98,7 +99,7 @@ module.exports = function syncNowJS(httpApp){
 	// ---------------------------------------------------------- //
 
 	nowjs.on('connect', function(){
-		
+
 		everyone.now.syncPeers(this.user.clientId, true, function(x){
 
 			everyone.now.updateUserList(x);
