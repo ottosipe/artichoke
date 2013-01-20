@@ -10,7 +10,7 @@
     "express": "3.0.5",
     "jade": "*",
     "less-middleware": "*",
-    "mongodb": "*",
+    "now": "*",
     "nodemailer": "*",
     "opentok" : "0.3.x",
     "sha1": "*",
