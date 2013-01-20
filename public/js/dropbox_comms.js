@@ -25,10 +25,45 @@ $(function(){
   console.log('**client**');
   console.log(client);
 
-  client.mkdir('/fun', function(error, stat) {
+  /*client.mkdir('/fun', function(error, stat) {
         console.log('app.js stat');
         console.log(stat);
-  });
+  });*/
+
+  // ---------------------------------------------------------- //
+  // Utility Functions that need access to 'client' obj
+  // ---------------------------------------------------------- //
+
+  now.dropboxSaveFile = function( filename, data ) {
+    console.log('filename');
+    console.log(filename);
+    console.log(data);
+    client.writeFile(filename, data, function(error, stat) {
+        console.log('app.js stat');
+        console.log(stat);
+    });
+  }
+
+  now.dropboxOpenFile = function( filename ) {
+    console.log('dropboxOpenFile()');
+    console.log(filename);
+    client.findByName('', filename, { "httpCache": "true" }, function(e, files) {
+      console.log(files[0]);
+      console.log(files.length);
+      if(files.length > 0 && files[0].isFile == true) {
+        client.readFile(files[0].path, { "httpCache": "true"}, function(e, filedata) {
+          console.log(e)
+          console.log(filedata);
+          now.overwriteEditor(filedata);
+        });
+      } else {
+        now.dropboxSaveFile(filename, '');
+      }
+    });
+  }
+
+  // ---------------------------------------------------------- //
+  // ---------------------------------------------------------- //
 
   client.readdir("/", function(error, entries) {
     if (error) {} // Throw a Dialog Box

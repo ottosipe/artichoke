@@ -22,7 +22,29 @@ $(function(){
 
 
   // ---------------------------------------------------------- //
+  // Button Handlers
   // ---------------------------------------------------------- //
+
+  $('.icon-pencil').click(function(){
+    console.log('cllcikkkyyypencil');
+    console.log($('#hash').val());
+    if($('#hash').val()) {
+      console.log(window.activeFile);
+      now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
+      window.activeFile = $('#hash').val();
+      now.dropboxOpenFile(window.activeFile);
+      $('#filepath').text(window.activeFile);
+      editor.getSession().setValue('');
+    }
+  });
+
+  $('.icon-hdd').click(function(){
+    console.log('cllcikkkyyyhdd');
+  });
+
+  $('.icon-trash').click(function(){
+    console.log('cllcikkkyyytrash');
+  });
 
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //
@@ -155,19 +177,12 @@ $(function(){
     }
   });
 
-
-
   editor.commands.addCommand({
     name: 'save',
     bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
     exec: function(editor) {
-        client.writeFile(window.activeFile, editor.getSession().getValue(), function(error, stat) {
-          if (error) {
-            // Throw a dialog box
-          }
-
-          console.log("File saved as revision " + stat.revisionTag);
-          $('#disconnect_notifier').text(data);
+        now.dropboxSaveFile(window.activeFile, editor.getSession().getValue(), function() {
+          $('#disconnect_notifier').text('Saved.');
           $('#disconnect_notifier').fadeIn('slow');
           $('#disconnect_notifier').delay(1500).fadeOut('slow');
         });
@@ -202,5 +217,10 @@ $(function(){
     readOnly: false // not for readOnly mode
   });
 
-});
+  now.overwriteEditor = function(filedata) {
+    console.log('CALLLBACKKKK');
+    console.log(filedata);
+    editor.getSession().setValue(filedata);
+  }
 
+});
