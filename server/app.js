@@ -6,7 +6,7 @@ var express   = require('express')
   , config    = require('./config.js')
   , http      = require('http')
   , sha1      = require('sha1')
-  , sync  = require('./sync.js');
+  , sync      = require('./sync.js');
 
 // setup here
 config(app);
@@ -18,15 +18,11 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 
 sync(httpApp);
 
-
-
 // define API routes here
-app.get('/', router.splash);
-app.get('/edit/:hash', router.edit);
+app.get('/',             router.splash);
+app.get('/auth/:id',     router.auth  );
+app.get('/edit/:hash',   router.edit  );
 app.get('/:hash/tokbox', router.tokbox);
 
 app.post('/create', router.create);
-
-app.get('/auth/:id', router.auth);
-
-app.post('/email', router.email)
+app.post('/email',  router.email );

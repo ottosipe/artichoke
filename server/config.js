@@ -1,6 +1,6 @@
-var express = require("express")
-  , path = require('path')
-  , secret = require('./secret.js');
+var express = require('express')
+  , path    = require('path')
+  , secret  = require('./secret.js');
 
 module.exports = function configure(app) {
   app.configure(function(){
@@ -14,6 +14,7 @@ module.exports = function configure(app) {
     app.use(app.router);
     app.use(require('less-middleware')({ src: __dirname + '/../public' }));
     app.use(express.static(path.join(__dirname, '/../public')));
+    
     // required password for admins
     app.use('/admin', express.basicAuth(function(user, pass){
       return 'user' == user & 'pass' == pass;

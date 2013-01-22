@@ -1,7 +1,7 @@
-var email  = require("./email.js")
-	, fs   = require('fs')
-	, sha1 = require("sha1")
-	, OpenTok = require('opentok');
+var email   = require('./email.js')
+  , fs      = require('fs')
+  , sha1    = require('sha1')
+  , OpenTok = require('opentok');
 
 var _servers = __dirname+"/../public/servers/";	
 var userServer;

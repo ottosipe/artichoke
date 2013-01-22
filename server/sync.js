@@ -1,5 +1,5 @@
-var nowjs = require( "now" )
-	, fs = require('fs');
+var nowjs = require('now')
+  , fs    = require('fs');
 
 // Create a local memory space for further now-configuration.
 module.exports = function syncNowJS(httpApp){

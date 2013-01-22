@@ -1,7 +1,7 @@
-var nodemailer = require("nodemailer"),
-    secret     = require(__dirname + "/secret.js"),
-    fs         = require("fs"),
-    jade       = require("jade");
+var nodemailer = require('nodemailer')
+  , secret     = require(__dirname + '/secret.js')
+  , fs         = require('fs')
+  , jade       = require('jade');
 
 // create reusable transport method (opens pool of SMTP connections)
 var smtpTransport = nodemailer.createTransport("SMTP", {

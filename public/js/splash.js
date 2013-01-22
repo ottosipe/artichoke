@@ -1,6 +1,6 @@
 $('#start').submit(function(e){
 	e.preventDefault();
-	var loc = "default";
+	var loc = 'default';
 	if($('#hash').val()) {
 		loc = $('#hash').val();
 	}

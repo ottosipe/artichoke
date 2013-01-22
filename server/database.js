@@ -1,5 +1,5 @@
-var MongoDB 	= require("mongodb"),
-	secret 		= require("./secret.js");
+var MongoDB 	= require('mongodb')
+  , secret 		= require('./secret.js');
 
 var API = module.exports = exports;
 
