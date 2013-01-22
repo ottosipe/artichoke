@@ -3,10 +3,10 @@ var email   = require('./email.js')
   , sha1    = require('sha1')
   , OpenTok = require('opentok');
 
-var _servers = __dirname+"/../public/servers/";	
+var _servers = __dirname + '/../public/servers/';
 var userServer;
 
-var hosts = {};
+var hosts     = {};
 var tbSession = {};
 
 // auth page
@@ -38,14 +38,12 @@ exports.create = function(req, res){
 exports.email = function(req, res){
 	email.send(req.body, 'template.jade', function(data) {
 		res.send(data);
-	})
+	});
 };
 
 // room page
 exports.edit = function(req, res){
-
 	res.render('index');
-
 };
 
 
@@ -54,13 +52,13 @@ exports.splash = function(req, res){
 	res.render('splash', { title: 'Artichoke' });
 };
 
-var key = '22586972';    // Replace with your API key  
-var secret = 'a535e3c85f85b25965171705fb78f35ec2a188af';  // Replace with your API secret  
+var key     = '22586972';    // Replace with your API key  
+var secret  = 'a535e3c85f85b25965171705fb78f35ec2a188af';  // Replace with your API secret  
 var opentok = new OpenTok.OpenTokSDK(key, secret);
 
 exports.tokbox = function(req, res) {
 	var hash = req.params.hash;
-	console.log("hello, ", hash)
+	console.log('hello,', hash)
 	if (tbSession[hash] == undefined) {
 		
 		opentok.createSession("localhost", {'p2p.preference':'enabled'}, function(result){
@@ -69,7 +67,7 @@ exports.tokbox = function(req, res) {
 		  	session: result,
 		  	token: opentok.generateToken({session_id:result, role:OpenTok.RoleConstants.PUBLISHER, connection_data:"userId:42"})
 		  }
-		  console.log("new", obj)
+		  console.log('new', obj)
 		  res.send(obj)
 		});
 
@@ -78,7 +76,7 @@ exports.tokbox = function(req, res) {
 			session: tbSession[hash],
 			token: opentok.generateToken({session_id:tbSession[hash], role:OpenTok.RoleConstants.PUBLISHER, connection_data:"userId:42"})
 		}
-		console.log("same", obj)
+		console.log('same', obj)
 		res.send(obj);	
 	}
-} 
+};

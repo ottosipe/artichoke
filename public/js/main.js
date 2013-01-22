@@ -93,10 +93,8 @@ now.updateUserList = function( clientList ){
   // Do other stuff when a new client joins
   window.users = clientList;
   console.log(window.users);
-
   //window.userID = this.core.clientId;
   //console.log('you', userID) //***
-
 }
 
 now.removeZombieCursor = function( id ) {
@@ -124,7 +122,6 @@ now.updateCursor = function( cursorLoc, hash ){
 
 // Syncs this browser's text with the incoming changes to the text
 now.updateText = function( data, hash ){
-
   if( isNew ) {
     now.newUser(sessionHash);
     isNew = false;
@@ -149,14 +146,13 @@ now.updateText = function( data, hash ){
   } else {
     if(data.doc != undefined) {
       console.log(data.doc);
-
-//        editor.getSession().setValue(data.doc);
+      //editor.getSession().setValue(data.doc);
       //falseChange = true; //***
     }
   }
 }
 
-now.overwriteEditor = function(filedata) {
+now.overwriteEditor = function( filedata ) {
   editor.getSession().setValue(filedata);
 }
 
