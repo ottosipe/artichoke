@@ -205,15 +205,15 @@ editor.getSession().on('change', function(delta) {
   if(falseChange === true) {
     falseChange = false;
   } else {
-      if(data.action != 'insertLines') {
-        now.pushText(data, sessionHash);
-      }
-      else {
-        falseChange == true;
-        data.action = 'wholeDoc';
-        data.text = editor.getSession().getValue();
-        now.pushText(data, sessionHash)
-      }
+    if(data.action != 'insertLines') {
+      now.pushText(data, sessionHash);
+    }
+    else {
+      falseChange == true;
+      data.action = 'wholeDoc';
+      data.text = editor.getSession().getValue();
+      now.pushText(data, sessionHash)
+    }
   }
 });
 
@@ -225,19 +225,18 @@ editor.commands.addCommand({
   name: 'save',
   bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
   exec: function(editor) {
-      $('#disconnect_notifier').text('Saved.');
-      $('#disconnect_notifier').fadeIn('slow');
-      $('#disconnect_notifier').delay(1500).fadeOut('slow');
-      now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
+    $('#disconnect_notifier').text('Saved.');
+    $('#disconnect_notifier').fadeIn('slow');
+    $('#disconnect_notifier').delay(1500).fadeOut('slow');
+    now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
 
-      /*now.sendDoc( editor.getSession().getValue(), sessionHash , function(textData, hash, id) {
-        if(id != userID && sessionHash == hash) {
-          console.log(id, hash, textData.doc);
-          editor.getSession().setValue(textData.doc);
-        }
-      });
-     falseChange = true; */ //***
-
+    /*now.sendDoc( editor.getSession().getValue(), sessionHash , function(textData, hash, id) {
+      if(id != userID && sessionHash == hash) {
+        console.log(id, hash, textData.doc);
+        editor.getSession().setValue(textData.doc);
+      }
+    });
+   falseChange = true; */ //***
   },
   readOnly: false // not for readOnly mode
 });
@@ -246,7 +245,7 @@ editor.commands.addCommand({
   name: 'reload',
   bindKey: {win: 'Ctrl-R',  mac: 'Command-R'},
   exec: function(editor) {
-      console.log('Not allowed to reload!')
+    console.log('Not allowed to reload!')
   },
   readOnly: false // not for readOnly mode
 });
@@ -255,7 +254,7 @@ editor.commands.addCommand({
   name: 'newFile',
   bindKey: {win: 'Ctrl-X',  mac: 'Command-X'},
   exec: function(editor) {
-      $('#hash').focus();
+    $('#hash').focus();
   },
   readOnly: false // not for readOnly mode
 });
@@ -264,8 +263,8 @@ editor.commands.addCommand({
   name: 'shift',
   bindKey: {win: 'Shift-Enter',  mac: 'Shift-Enter'},
   exec: function(editor) {
-      // EASTER EGG!!!!
-      console.log('Node up!!');
+    // EASTER EGG!!!!
+    console.log('Node up!!');
   },
   readOnly: false // not for readOnly mode
 });

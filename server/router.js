@@ -12,12 +12,11 @@ var tbSession = {};
 // auth page
 exports.auth = function(req, res) {
 	console.log(req.params.id);
-	res.render('auth.jade', { url:req.params.id , title: 'Artichoke' } );
+	res.render('auth.jade', { url:req.params.id , title: 'Artichoke' });
 };
 
 // throw user into a new room
 exports.create = function(req, res){
-	console.log('FUNION!');
 	console.log(req.body);
 
 	var sandbox_name = "";

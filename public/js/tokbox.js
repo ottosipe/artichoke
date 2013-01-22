@@ -5,19 +5,19 @@ $(function(){
   // Think of a session as a room, and a token as the key to get in to the room
   // Sessions and tokens are generated on your server and passed down to the client
 
-  var apiKey = "22586972";
+  var apiKey = '22586972';
   TB.setLogLevel(TB.DEBUG);
 
   var session;
 
   $('#startVideo').click(function() {
     $.get('/' + window.sessionHash + '/tokbox', function(data) {
-        console.log(data)
-        session = TB.initSession(data.session);
-        session.addEventListener('sessionConnected', sessionConnectedHandler);
-        session.addEventListener('streamCreated', streamCreatedHandler);
-        session.connect(apiKey, data.token);
-        $(this).parent().hide();
+      console.log(data)
+      session = TB.initSession(data.session);
+      session.addEventListener('sessionConnected', sessionConnectedHandler);
+      session.addEventListener('streamCreated', streamCreatedHandler);
+      session.connect(apiKey, data.token);
+      $(this).parent().hide();
     });
   });
 
