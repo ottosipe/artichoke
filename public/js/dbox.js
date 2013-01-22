@@ -9,7 +9,7 @@ client.authDriver(new Dropbox.Drivers.Redirect({rememberUser: true}));
 
 // Error Handling Logging
 client.onError.addListener(function(error) {
-    console.error(error);
+  console.error(error);
 });
 
 client.authenticate(function(error, client) {
@@ -22,11 +22,11 @@ client.authenticate(function(error, client) {
   // ---------------------------------------------------------- //
   // Strip out '/auth' from pathname
   // ---------------------------------------------------------- //
-  var url_to_go = window.location.pathname.substr(window.location.pathname.indexOf('/') + 1, window.location.pathname.length - 1);
-  url_to_go = url_to_go.substr(url_to_go.indexOf('/'), url_to_go.length - url_to_go.indexOf('/'));
-  url_to_go = url_to_go.substr(url_to_go.indexOf('/') + 1, url_to_go.length - (url_to_go.indexOf('/') + 1))
+  var url_to_go     = window.location.pathname.substr(window.location.pathname.indexOf('/') + 1, window.location.pathname.length - 1);
+  url_to_go         = url_to_go.substr(url_to_go.indexOf('/'), url_to_go.length - url_to_go.indexOf('/'));
+  url_to_go         = url_to_go.substr(url_to_go.indexOf('/') + 1, url_to_go.length - (url_to_go.indexOf('/') + 1))
   var length_of_loc = url_to_go.indexOf('/');
-  url_to_go = url_to_go.substr(0, length_of_loc);
+  url_to_go         = url_to_go.substr(0, length_of_loc);
   // ---------------------------------------------------------- //
   // ---------------------------------------------------------- //
 

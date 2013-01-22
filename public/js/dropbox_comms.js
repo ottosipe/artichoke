@@ -10,12 +10,12 @@ $(function(){
 
   // Error Handling Logging
   client.onError.addListener(function(error) {
-      console.error(error);
+    console.error(error);
   });
 
   client.authenticate(function(error, client) {
-      if (error) {} // Throw a Dialog Box
-      console.log("Auth'd with Dropbox!");
+    if (error) {} // Throw a Dialog Box
+    console.log("Auth'd with Dropbox!");
   });
 
   client.getUserInfo(function(error, userInfo) {
@@ -31,7 +31,7 @@ $(function(){
 
   now.dropboxSaveFile = function( filename, data ) {
     client.writeFile(filename, data, function(error, stat) {
-        console.log(stat);
+      console.log(stat);
     });
   }
 
@@ -63,7 +63,7 @@ $(function(){
 
   client.readdir("/", function(error, entries) {
     if (error) {} // Throw a Dialog Box
-    window.activeFile = 'README';
+    window.activeFile     = 'README';
     window.activeFilePath = '/README'
 
     now.dropboxOpenFile('README', function(a, b){

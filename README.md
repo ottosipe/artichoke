@@ -5,6 +5,8 @@ An online editor for pair programming.
 
 ### Todo
 
+- Copy/Paste
+
 - Re-implement syncing with ShareJS instead of NowJS
 
 - Re-implement cloud storage with Github instead of Dropbox
