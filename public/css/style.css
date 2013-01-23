@@ -54,6 +54,12 @@ body {
   height: 0px;
   margin-bottom: -10px;
 }
+.loader {
+  position: absolute;
+  top: 30%;
+  right: 50%;
+  left: 50%;
+}
 #disconnect_notifier {
   background: black;
   border-bottom: 2px #8cc84b solid;
