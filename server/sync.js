@@ -39,15 +39,16 @@ module.exports = function syncNowJS(httpApp){
   };
 
   // Sync Text
-  everyone.now.syncText = function( textData, clientId, hash ){
+  everyone.now.syncText = function( textDelta, clientId, hash ){
     if(this.user.clientId != clientId) {
-      this.now.updateText(textData, hash);
+      this.now.updateText(textDelta, hash);
+      //console.log(textDelta)
     }
   };
 
-  everyone.now.pushText = function( textData, hash ){
+  everyone.now.pushText = function( textDelta, hash ){
     //checkSession(hash, this.user.clientId);
-    everyone.now.syncText(textData, this.user.clientId, hash);
+    everyone.now.syncText(textDelta, this.user.clientId, hash);
   };
 
   everyone.now.sendDoc = function( doc, hash , cb) {

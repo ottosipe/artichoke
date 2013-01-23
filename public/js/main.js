@@ -37,13 +37,13 @@ $(function(){
 // Auto-save
 // ---------------------------------------------------------- //
 
-setInterval(function(){
+/*setInterval(function(){
   $('#filepath').fadeOut('fast');
   setTimeout(function(){
     $('#filepath').fadeIn('fast');
   }, 300);
   now.dropboxSaveFile(window.activeFile, editor.getSession().getValue());
-}, 8000); // Auto-save every 8 seconds
+}, 8000); // Auto-save every 8 seconds */
 
 // ---------------------------------------------------------- //
 // Button Handlers
@@ -121,35 +121,20 @@ now.updateCursor = function( cursorLoc, hash ){
 }
 
 // Syncs this browser's text with the incoming changes to the text
-now.updateText = function( data, hash ){
-  if( isNew ) {
+now.updateText = function( delta, hash ){
+  /*if( isNew ) {
     now.newUser(sessionHash);
     isNew = false;
-  } 
+  } */
 
   if (hash != sessionHash) return;
 
-  console.log(data)
+  console.log(delta)
   falseChange = true;
-  //console.log(now.core.clientId, data.action);
-  //console.log(data);
-  if(data.action == 'removeLines' || data.action == 'removeText') {
-    var r = data.range;
-    var range = new Range(r.start.row, r.start.column, r.end.row, r.end.column);
-    editor.session.remove(range);
-  } else if (data.action == 'insertText') {
-     // single word
-      editor.session.insert(data.range.start, data.text);
-  } else if (data.action == 'insertLines' ) {
-      var all = data.lines.join('\n');
-      editor.session.insert(data.range.start, data.text);
-  } else {
-    if(data.doc != undefined) {
-      console.log(data.doc);
-      //editor.getSession().setValue(data.doc);
-      //falseChange = true; //***
-    }
-  }
+  var arr = [];
+  arr.push(delta.data)
+  editor.getSession().doc.applyDeltas(arr);
+
 }
 
 now.overwriteEditor = function( filedata ) {
@@ -201,20 +186,7 @@ editor.getSession().selection.on('changeCursor', function(e) {
 });
 
 editor.getSession().on('change', function(delta) {
-  var data = delta.data;
-  if(falseChange === true) {
-    falseChange = false;
-  } else {
-    if(data.action != 'insertLines') {
-      now.pushText(data, sessionHash);
-    }
-    else {
-      falseChange == true;
-      data.action = 'wholeDoc';
-      data.text = editor.getSession().getValue();
-      now.pushText(data, sessionHash)
-    }
-  }
+  if (!falseChange) now.pushText(delta, sessionHash)
 });
 
 // ---------------------------------------------------------- //
@@ -265,15 +237,6 @@ editor.commands.addCommand({
   exec: function(editor) {
     // EASTER EGG!!!!
     console.log('Node up!!');
-  },
-  readOnly: false // not for readOnly mode
-});
-
-editor.commands.addCommand({
-  name: 'disablePaste',
-  bindKey: {win: 'Ctrl-V',  mac: 'Command-V'},
-  exec: function(editor) {
-    //MT
   },
   readOnly: false // not for readOnly mode
 });
