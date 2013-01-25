@@ -7,7 +7,11 @@ An online editor for pair programming.
 
 - login with GitHub
 
-- Re-implement cloud storage with Github instead of Dropbox
+- file browser, save, open, close
+
+- change code syntax
+
+- Re-implement cloud storage with Github instead of Dropbox 
 
   - Matt still thinks Dropbox integration is good for non-technical people
 
