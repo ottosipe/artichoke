@@ -5,15 +5,11 @@ An online editor for pair programming.
 
 ### Todo
 
-- Copy/Paste
-
-- Re-implement syncing with ShareJS instead of NowJS
+- login with GitHub
 
 - Re-implement cloud storage with Github instead of Dropbox
 
   - Matt still thinks Dropbox integration is good for non-technical people
-
-- Deploy somewhere (Nodejitsu?)
 
 - Launch code live on virtual servers
 
