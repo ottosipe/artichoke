@@ -9,6 +9,12 @@ var userServer;
 var hosts     = {};
 var tbSession = {};
 
+exports.test = function(req, res) {
+  res.render('test.jade');
+}
+
+
+
 // auth page
 exports.auth = function(req, res) {
   console.log(req.params.id);

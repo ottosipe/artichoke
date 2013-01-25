@@ -10,7 +10,7 @@
     "express": "*",
     "jade": "*",
     "less-middleware": "*",
-    "now": "*",
+    "share": "*",
     "nodemailer": "*",
     "opentok": "0.3.x",
     "sha1": "*",
