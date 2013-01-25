@@ -21,7 +21,7 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 // define API routes here
 app.get('/',             router.splash);
 app.get('/auth/:id',     router.auth  );
-app.get('/edit/:hash',   router.edit  );
+app.get('/edit',   router.edit  );
 app.get('/:hash/tokbox', router.tokbox);
 
 app.post('/create', router.create);

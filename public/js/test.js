@@ -5,11 +5,19 @@ editor.getSession().setMode('ace/mode/javascript');
 editor.setHighlightActiveLine(false);
 editor.setShowPrintMargin(false); // got rid of vertical line
 
-var sessionHash    = window.location.pathname;
-var cut            = sessionHash.lastIndexOf('/') + 1;
-window.sessionHash = sessionHash.substr(cut, sessionHash.length);
+var hash = window.location.hash;
 
-console.log("Editing session", sessionHash);
-sharejs.open(sessionHash, 'text', function(error, doc) {
+console.log("Editing session", hash);
+sharejs.open(hash, 'text', function(error, doc) {
 	doc.attach_ace(editor);
+});
+
+
+$(function(){
+  $('#addFriend').click(function() {
+    var email = prompt('Add your friend!');
+    $.post('/email', {email: email, name: 'your friend', hash: sessionHash}, function(data) {
+      console.log('added friend');
+    }); 
+  });
 });
