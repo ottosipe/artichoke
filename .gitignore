@@ -11,9 +11,6 @@ pids
 logs
 results
 
-!/public/servers/.gitkeep
-/public/servers/*
-
 npm-debug.log
 
 /node_modules
