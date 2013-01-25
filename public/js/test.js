@@ -8,6 +8,8 @@ editor.setShowPrintMargin(false); // got rid of vertical line
 var hash = window.location.hash;
 
 console.log("Editing session", hash);
+
+if (hash == "" || hash == "#") window.location = "/"
 sharejs.open(hash, 'text', function(error, doc) {
 	doc.attach_ace(editor);
 });
