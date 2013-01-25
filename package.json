@@ -1,6 +1,6 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
+  "name": "artichoke",
+  "version": "0.0.1-1",
   "private": true,
   "scripts": {
     "start": "node server"
@@ -12,12 +12,13 @@
     "less-middleware": "*",
     "now": "*",
     "nodemailer": "*",
-    "opentok" : "0.3.x",
+    "opentok": "0.3.x",
     "sha1": "*",
     "util": "*"
   },
   "engines": {
     "node": "0.8.x",
     "npm": "1.1.x"
-  }
+  },
+  "subdomain": "artichoke"
 }

@@ -66,10 +66,10 @@ $(function(){
     window.activeFile     = 'README';
     window.activeFilePath = '/README'
 
-    now.dropboxOpenFile('README', function(a, b){
+    /*now.dropboxOpenFile('README', function(a, b){
         console.log(a);
         console.log(b);
-    });
+    });*/
     window.files = entries;
     console.log("Your Dropbox contains " + entries.join(", "));
   });

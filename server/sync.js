@@ -5,11 +5,10 @@ var nowjs = require('now')
 module.exports = function syncNowJS(httpApp){
   // Create the JSON object to store all user data
   var data     = { "users": [] };
-  var everyone = nowjs.initialize(
-    httpApp, 
-    {socketio: 
-      {transports: ['xhr-polling', 'jsonp-polling']
-    }
+  var everyone = nowjs.initialize( httpApp, {socketio: 
+      {
+      //  transports: [ 'xhr-polling', 'jsonp-polling' ]
+      }
   });
 
   // ---------------------------------------------------------- //
