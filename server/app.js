@@ -27,5 +27,3 @@ app.get('/:hash/tokbox', router.tokbox);
 
 app.post('/create', router.create);
 app.post('/email',  router.email );
-
-app.get('/test',         router.test);

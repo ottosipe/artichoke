@@ -1,20 +1,25 @@
 {
   "name": "artichoke",
-  "version": "0.0.1-1",
+  "version": "0.2.0-1",
   "private": true,
   "scripts": {
     "start": "node server"
   },
+  "domains": [
+    "artichokedit.com",
+    "www.artichokedit.com"
+  ],
   "dependencies": {
-    "colors": "*",
-    "express": "*",
-    "jade": "*",
-    "less-middleware": "*",
-    "share": "*",
-    "nodemailer": "*",
-    "opentok": "0.3.x",
-    "sha1": "*",
-    "util": "*"
+    "coffee-script": "1.4.0",
+    "colors": "0.6.0",
+    "express": "3.0.5",
+    "jade": "0.28.1",
+    "less-middleware": "0.1.9",
+    "share": "0.5.0",
+    "nodemailer": "0.3.37",
+    "opentok": "0.3.0",
+    "sha1": "1.0.1",
+    "util": "0.4.9"
   },
   "engines": {
     "node": "0.8.x",

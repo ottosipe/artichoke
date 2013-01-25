@@ -5,5 +5,5 @@ $('#start').submit(function(e){
   	loc = $('#hash').val();
   }
   // check if namespace is avail!
-  window.location = '/auth/' + loc + '/';
+  window.location = '/edit/' + loc + '/'; //bypass auth right now
 });
