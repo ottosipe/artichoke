@@ -31,6 +31,11 @@ $(function(){
       console.log('added friend');
     }); 
   });
+
+  $("#syntaxSelect").change(function() {
+    console.log($(this).val())
+  });
+
 });
 
 // ---------------------------------------------------------- //
