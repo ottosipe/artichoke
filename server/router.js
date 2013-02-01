@@ -48,13 +48,9 @@ exports.edit = function(req, res){
     res.render('index');
   })
 
-  /*client.get('/user', function (err, status, body) {
+  client.get('/user', function (err, status, body) {
     console.log(body); //json object
   });
-
-  client.repo('ottosipe/artichoke').info(function(err, repo) {
-    console.log(repo)
-  })*/
 
 
 };
