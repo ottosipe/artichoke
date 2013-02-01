@@ -5,11 +5,17 @@ var express = require('express')
 module.exports = function configure(app) {
   app.configure(function(){
 
-    app.set('port', process.env.PORT || 3001);
+    var store  = new express.session.MemoryStore;
+
+    app.set('port', process.env.PORT || 3000);
     app.set('views', __dirname + '/../views');
     app.set('view engine', 'jade');
     app.use(express.logger('dev'));
     app.use(express.bodyParser());
+    app.use(express.cookieParser('Lbw04m1gVCq35fcpx3'));
+
+    app.use(express.session({ secret: 'Lbw04m1gVCq35fcpx3', store: store }))
+
     app.use(express.methodOverride());
     app.use(app.router);
     app.use(require('less-middleware')({ src: __dirname + '/../public' }));

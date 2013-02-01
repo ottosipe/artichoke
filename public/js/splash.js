@@ -10,14 +10,7 @@ $('#start').submit(function(e){
 		doc = $('#doc').val();
 
 		// check if namespace is available!
-
-		var link = "https://github.com/login/oauth/authorize?client_id="
-		+github.client_id 
-		+"&redirect_uri=" 
-		+ window.location.origin
-		+ "/edit/" + doc;
-
-		window.location = link;
+		window.location = "./login/"+doc;
 	} else {
 		$(this).animate({marginRight:"60px"}, 60, function() {
 			$(this).animate({marginRight:"0px", marginLeft:"60px"}, 60, function() {

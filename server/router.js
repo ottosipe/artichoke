@@ -1,36 +1,27 @@
 var email   = require('./email.js')
   , fs      = require('fs')
   , sha1    = require('sha1')
-  , OpenTok = require('opentok');
+  , OpenTok = require('opentok')
+  , github = require('octonode');
 
-var _servers = __dirname + '/../public/servers/';
-var userServer;
+// config github
+var auth_url = github.auth.config({
+  id: '4f764f0fe8285250849d', // only for artichoke test
+  secret: 'feab45be8f01be40e2e59282cdbf1ae16c3d127d'
+}).login(['user', 'repo', 'gist']);
 
-var hosts     = {};
-var tbSession = {};
+// login to github
+exports.login = function(req, res) {
+  res.redirect(301, auth_url + "&redirect_uri=http://localhost:3000/auth/" + req.params.id);
+};
 
 // auth page
 exports.auth = function(req, res) {
-  console.log(req.params.id);
-  res.render('auth.jade', { url:req.params.id , title: 'Artichoke' });
-};
-
-// throw user into a new room
-exports.create = function(req, res){
-  console.log(req.body);
-
-  var sandbox_name = '';
-
-  if(req.body.url != undefined) {
-    sandbox_name = req.body.url;
-  } else {
-    var hash     = sha1((new Date).getTime());
-    var hash     = hash.substr(0,6);
-    sandbox_name = hash;
-  }
-
-  // create tokbox token!!
-  res.send(sandbox_name);
+  github.auth.login(req.query.code, function (err, token) {
+    console.log("got the token:",token);
+    res.cookie('gh', token, { signed: true }); // set expires
+    res.redirect(301, "/edit/" + req.params.id);
+  });
 };
 
 // room page
@@ -42,7 +33,30 @@ exports.email = function(req, res){
 
 // room page
 exports.edit = function(req, res){
-  res.render('index');
+
+  var client = github.client(req.signedCookies.gh);
+  // check for token validity! *** 
+  console.log(client)
+  client.me().repos(function(err, repos) {
+    if(err) { 
+      console.log(err);
+      res.redirect(301, "login/"+req.params.id);
+    }
+    for(i in repos)
+      console.log(repos[i].full_name)
+
+    res.render('index');
+  })
+
+  /*client.get('/user', function (err, status, body) {
+    console.log(body); //json object
+  });
+
+  client.repo('ottosipe/artichoke').info(function(err, repo) {
+    console.log(repo)
+  })*/
+
+
 };
 
 // main page
@@ -55,6 +69,7 @@ exports.splash = function(req, res){
 var key     = '22586972';    // Replace with your API key  
 var secret  = 'a535e3c85f85b25965171705fb78f35ec2a188af';  // Replace with your API secret  
 var opentok = new OpenTok.OpenTokSDK(key, secret);
+var tbSession = {};
 
 exports.tokbox = function(req, res) {
   var hash = req.params.hash;
