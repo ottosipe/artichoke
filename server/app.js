@@ -10,6 +10,7 @@ var express   = require('express')
 
 // setup here
 config(app);
+router.start(app)
 share.attach(app, {db: {type: 'none'}});
 
 // start the server

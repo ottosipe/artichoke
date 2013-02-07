@@ -1,6 +1,6 @@
 {
   "name": "artichoke",
-  "version": "0.2.0-3",
+  "version": "0.2.0-5",
   "private": true,
   "scripts": {
     "start": "node server"
@@ -17,7 +17,7 @@
     "less-middleware": "0.1.9",
     "share": "0.5.0",
     "nodemailer": "0.3.37",
-    "octonode":"0.2.3",
+    "octonode": "0.2.3",
     "opentok": "0.3.0",
     "sha1": "1.0.1",
     "util": "0.4.9"

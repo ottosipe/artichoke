@@ -4,15 +4,20 @@ var email   = require('./email.js')
   , OpenTok = require('opentok')
   , github = require('octonode');
 
-// config github
-var auth_url = github.auth.config({
-  id: '4f764f0fe8285250849d', // only for artichoke test
-  secret: 'feab45be8f01be40e2e59282cdbf1ae16c3d127d'
-}).login(['user', 'repo', 'gist']);
+
+exports.start = function(expApp) {
+  app = expApp;
+  // config github
+  auth_url = github.auth.config(app.get("gh_auth"))
+             .login(['user', 'repo', 'gist']);
+} 
+
 
 // login to github
 exports.login = function(req, res) {
-  res.redirect(301, auth_url + "&redirect_uri=http://localhost:3000/auth/" + req.params.id);
+  var url = auth_url + "&redirect_uri="+app.get("host_url")+"/auth/" + req.params.id;
+  console.log(req.origin)
+  res.redirect(301, url);
 };
 
 // auth page

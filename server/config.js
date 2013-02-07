@@ -29,6 +29,13 @@ module.exports = function configure(app) {
 
   app.configure('development', function(){
     app.use(express.errorHandler());
+    app.set("host_url", "http://localhost:3000")
+    app.set("gh_auth", secret.gh_dev)
+  });
+
+  app.configure('production', function(){
+    app.set("host_url", "http://artichokedit.com")
+    app.set("gh_auth", secret.gh_prod)
   });
 
 }
