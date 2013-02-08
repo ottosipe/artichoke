@@ -8,10 +8,8 @@ var email   = require('./email.js')
 exports.start = function(expApp) {
   app = expApp;
   // config github
-  auth_url = github.auth.config(app.get("gh_auth"))
-             .login(['user', 'repo', 'gist']);
-} 
-
+  auth_url = github.auth.config(app.get("gh_auth")).login(['user', 'repo', 'gist']);
+}
 
 // login to github
 exports.login = function(req, res) {

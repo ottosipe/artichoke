@@ -19,4 +19,4 @@ Procfile
 
 .DS_Store
 
-/server/secret.js
+secret.js
