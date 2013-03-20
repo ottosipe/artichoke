@@ -2,7 +2,6 @@ extends editor_layout
 
 block append header
 	title Artichoke Editor
-	//- VARIABLE NAME#{obj}
 
 block append content
 	.center
@@ -28,3 +27,11 @@ block append content
 		//.btn-group
 			a.btn#hdd: i.icon-hdd
 			a.btn#trash: i.icon-trash
+
+block append scripts
+	script
+		$(function(){
+			// Extract the user github data sent from the server
+			var gh = JSON.parse(!{JSON.stringify(github)});
+			console.log(gh);
+		});

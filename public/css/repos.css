@@ -20,7 +20,8 @@ span {
   color: white;
 }
 a:hover {
-  text-decoration: underline;
+  text-decoration: none;
+  font-weight: bold;
   cursor: pointer;
   color: #00ff00;
 }

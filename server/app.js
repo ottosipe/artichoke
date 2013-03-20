@@ -23,7 +23,6 @@ var httpApp = http.createServer(app).listen(app.get('port'), function(){
 app.get('/',             router.splash);
 app.get('/login/:id',    router.login);
 app.get('/auth/:id',     router.auth);
-app.post('/auth',        router.repoAuth);
 app.get('/edit/:id',   	 router.edit);
 app.get('/:hash/tokbox', router.tokbox);
 app.get('/repos',        router.repos);

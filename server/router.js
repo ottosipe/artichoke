@@ -2,18 +2,14 @@ var email   = require('./email.js')
   , fs      = require('fs')
   , sha1    = require('sha1')
   , OpenTok = require('opentok')
-  , github = require('octonode');
+  , github  = require('octonode');
 
 
 exports.start = function(expApp) {
   app = expApp;
   // config github
   console.log(app.get("gh_auth"));
-  auth_url = github.auth.config(app.get("gh_auth")).login(['user', 'repo', 'gist'], function(d, e){
-    console.log('github - callback');
-    console.log(d);
-    console.log(e);
-  });
+  auth_url = github.auth.config(app.get("gh_auth")).login(['user', 'repo', 'gist']);
 }
 
 // login to github
@@ -27,17 +23,10 @@ exports.login = function(req, res) {
 exports.auth = function(req, res) {
   console.log('code = ', req.query.code);
   github.auth.login(req.query.code, function (err, token) {
+    if(err) throw err;
     console.log("got the token:",token);
     res.cookie('gh', token, { signed: true }); // set expires
     res.redirect(301, "/edit/" + req.params.id);
-  });
-};
-
-exports.repoAuth = function(req, res) {
-  github.auth.login(req.query.code, function (err, token) {
-    console.log("got the token:",token);
-    res.cookie('gh', token, { signed: true }); // set expires
-    res.send(req.body.repo);
   });
 };
 
@@ -50,22 +39,31 @@ exports.email = function(req, res){
 
 // room page
 exports.edit = function(req, res){
+  getReposAndRespond(req, res, "index");
+};
+
+// repos page
+exports.repos = function(req, res){
+  getReposAndRespond(req, res, "repos");
+};
+
+// redirect the user after github auth
+function getReposAndRespond(req, res, jade_view){
   var client = github.client(req.signedCookies.gh);
-  // check for token validity! *** 
-  console.log(client)
-  client.me().repos(function(err, repos) {
-    if(err) { 
-      console.log(err);
-      res.redirect(301, "login/"+req.params.id);
-    }
-    for(i in repos)
-      console.log(repos[i].full_name)
-
-    res.render('index');
-  })
-
   client.get('/user', function (err, status, body) {
-    console.log(body); //json object
+    if(err) throw err;
+    client.me().repos(function(err, repos) {
+      if(err) { 
+        console.log(err);
+        res.redirect(301, "login/"+req.params.id);
+      }
+      body.repos = [];
+      for(i in repos){
+        body.repos[i] = repos[i].full_name;
+      }
+      if(jade_view === "repos") res.render(jade_view, { 'github' : body });
+      else res.render(jade_view, { 'github' : JSON.stringify(body) });
+    });
   });
 };
 
@@ -100,24 +98,4 @@ exports.tokbox = function(req, res) {
     console.log('same', obj);
     res.send(obj);	
   }
-};
-
-exports.repos = function(req, res){
-  var client = github.client(req.signedCookies.gh);
-  client.get('/user', function (err, status, body) {
-    if(err) throw err;
-    client.me().repos(function(err, repos) {
-      if(err) { 
-        console.log(err);
-        res.redirect(301, "login/"+req.params.id);
-      }
-      body.repos = [];
-      for(i in repos){
-        console.log(repos[i].full_name);
-        body.repos[i] = repos[i].full_name;
-      }
-      console.log(body);
-      res.render('repos', { 'github' : body });
-    });
-  });
 };

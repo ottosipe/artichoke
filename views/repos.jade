@@ -8,7 +8,7 @@ block append header
 block append content
   #header
     img(src="/img/github-cat.gif", width="50px")
-    h3#title(style='display:inline-block;padding-top:5px;') Repos
+    h3#title(style='display:inline-block;padding-top:5px;font-weight:bold;') Repos
     #filepath(style='display:inline-block;color:rgb(0,255,0);') /#{github.login}(#{github.repos.length})
   span#list
     ul
@@ -27,17 +27,5 @@ block append scripts
         // Replace the slashes in the github URL's with another control character (I'm replacing it with '_' here)
         console.log('name =', "/login/"+name.target.text.replace(/[\/]/g, '_'));
         window.location = "/login/"+name.target.text.replace(/[\/]/g, '_');
-        //var url = auth_url + "&redirect_uri="+app.get("host_url")+"/auth/" + req.params.id;
-        /*$.ajax({
-          type: "POST",
-          url: "/auth",
-          data: { "repo" : name.target.text },
-          success: function(response){
-            console.log('response!');
-            console.log(response);
-            window.location = "/edit/" + response.repo;
-          }
-        });*/
-        //./edit/#{github.repos[i]}
       });
     });
