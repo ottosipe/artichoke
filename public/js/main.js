@@ -228,6 +228,15 @@ editor.commands.addCommand({
 });
 
 editor.commands.addCommand({
+  name: 'gotoline',
+  bindKey: {win: 'Ctrl-L',  mac: 'Command-L'},
+  exec: function(editor) {
+    console.log('CMD-L!!!')
+  },
+  readOnly: false // not for readOnly mode
+});
+
+editor.commands.addCommand({
   name: 'newFile',
   bindKey: {win: 'Ctrl-X',  mac: 'Command-X'},
   exec: function(editor) {

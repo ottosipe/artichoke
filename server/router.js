@@ -8,7 +8,12 @@ var email   = require('./email.js')
 exports.start = function(expApp) {
   app = expApp;
   // config github
-  auth_url = github.auth.config(app.get("gh_auth")).login(['user', 'repo', 'gist']);
+  console.log(app.get("gh_auth"));
+  auth_url = github.auth.config(app.get("gh_auth")).login(['user', 'repo', 'gist'], function(d, e){
+    console.log('github - callback');
+    console.log(d);
+    console.log(e);
+  });
 }
 
 // login to github
@@ -27,7 +32,7 @@ exports.auth = function(req, res) {
   });
 };
 
-// room page
+// send email
 exports.email = function(req, res){
   email.send(req.body, 'template.jade', function(data) {
     res.send(data);
@@ -36,7 +41,6 @@ exports.email = function(req, res){
 
 // room page
 exports.edit = function(req, res){
-
   var client = github.client(req.signedCookies.gh);
   // check for token validity! *** 
   console.log(client)
@@ -54,14 +58,10 @@ exports.edit = function(req, res){
   client.get('/user', function (err, status, body) {
     console.log(body); //json object
   });
-
-
 };
 
 // main page
 exports.splash = function(req, res){
-
-
   res.render('splash', { title: 'Artichoke' });
 };
 
@@ -91,4 +91,24 @@ exports.tokbox = function(req, res) {
     console.log('same', obj);
     res.send(obj);	
   }
+};
+
+exports.repos = function(req, res){
+  var client = github.client(req.signedCookies.gh);
+  client.get('/user', function (err, status, body) {
+    if(err) throw err;
+    client.me().repos(function(err, repos) {
+      if(err) { 
+        console.log(err);
+        res.redirect(301, "login/"+req.params.id);
+      }
+      body.repos = [];
+      for(i in repos){
+        console.log(repos[i].full_name);
+        body.repos[i] = repos[i].full_name;
+      }
+      console.log(body);
+      res.render('repos', { 'github' : body });
+    });
+  });
 };

@@ -1,0 +1,22 @@
+extends layout
+
+block append header
+  title Artichoke(#{github.repos.length})
+  link(rel='stylesheet', href='/css/repos.css')
+  link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:300', type='text/css')
+
+block append content
+  .center
+    span#disconnect_notifier hello there
+  #header
+    h3#title(style='display:inline-block;') Repos
+    #filepath(style='display:inline-block;color:rgb(0,255,0);') /#{github.login}(#{github.repos.length})
+  span#list
+    ul
+      - for(i in github.repos)
+        - if(github.repos[i].indexOf(github.login) === -1)
+          li 
+            a(class="grayOut") #{github.repos[i]}
+        - else
+          li 
+            a #{github.repos[i]}
