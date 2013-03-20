@@ -7,7 +7,8 @@ block append header
 
 block append content
   #header
-    h3#title(style='display:inline-block;') Repos
+    img(src="/img/github-cat.gif", width="50px")
+    h3#title(style='display:inline-block;padding-top:5px;') Repos
     #filepath(style='display:inline-block;color:rgb(0,255,0);') /#{github.login}(#{github.repos.length})
   span#list
     ul
