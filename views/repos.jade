@@ -6,8 +6,6 @@ block append header
   link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:300', type='text/css')
 
 block append content
-  .center
-    span#disconnect_notifier hello there
   #header
     h3#title(style='display:inline-block;') Repos
     #filepath(style='display:inline-block;color:rgb(0,255,0);') /#{github.login}(#{github.repos.length})
@@ -16,7 +14,29 @@ block append content
       - for(i in github.repos)
         - if(github.repos[i].indexOf(github.login) === -1)
           li 
-            a(class="grayOut") #{github.repos[i]}
+            a(class="unownedRepos") #{github.repos[i]}
         - else
           li 
             a #{github.repos[i]}
+
+block append scripts
+  script
+    $(function(){
+      $('a').click(function(name){
+        // Replace the slashes in the github URL's with another control character (I'm replacing it with '_' here)
+        console.log('name =', "/login/"+name.target.text.replace(/[\/]/g, '_'));
+        window.location = "/login/"+name.target.text.replace(/[\/]/g, '_');
+        //var url = auth_url + "&redirect_uri="+app.get("host_url")+"/auth/" + req.params.id;
+        /*$.ajax({
+          type: "POST",
+          url: "/auth",
+          data: { "repo" : name.target.text },
+          success: function(response){
+            console.log('response!');
+            console.log(response);
+            window.location = "/edit/" + response.repo;
+          }
+        });*/
+        //./edit/#{github.repos[i]}
+      });
+    });

@@ -25,10 +25,19 @@ exports.login = function(req, res) {
 
 // auth page
 exports.auth = function(req, res) {
+  console.log('code = ', req.query.code);
   github.auth.login(req.query.code, function (err, token) {
     console.log("got the token:",token);
     res.cookie('gh', token, { signed: true }); // set expires
     res.redirect(301, "/edit/" + req.params.id);
+  });
+};
+
+exports.repoAuth = function(req, res) {
+  github.auth.login(req.query.code, function (err, token) {
+    console.log("got the token:",token);
+    res.cookie('gh', token, { signed: true }); // set expires
+    res.send(req.body.repo);
   });
 };
 
