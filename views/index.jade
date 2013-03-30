@@ -2,6 +2,7 @@ extends editor_layout
 
 block append header
 	title Artichoke Editor
+	link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Open+Sans:300', type='text/css')
 
 block append content
 	.center
@@ -12,6 +13,10 @@ block append content
 
 	#editor
 	#youtokbox.tokbox
+	#git_box
+		span
+			a Git Commit
+			input#git_msg(placeholder="Commit Message...")
 	#tokboxes
 	#footer.form-inline
 		.pull-right.btn-group
@@ -21,8 +26,7 @@ block append content
 		//.input-append
 			input(type='text', id='hash', placeholder='filepath')
 			a.btn#pencil: i.icon-pencil
-		include syntax
-		p github login and dropbox coming soon
+		//include syntax
 
 		//.btn-group
 			a.btn#hdd: i.icon-hdd
@@ -31,7 +35,36 @@ block append content
 block append scripts
 	script
 		$(function(){
+			// Auto-focus on the editor on page load
+			$('#editor .ace_text-input').focus();
 			// Extract the user github data sent from the server
 			var gh = JSON.parse(!{JSON.stringify(github)});
 			console.log(gh);
+			$(document).keydown(function(btn){
+				if(event.ctrlKey || event.metaKey) {
+					$('#git_box').fadeToggle(function(){
+						console.log($('#git_box').css('display'));
+						if($('#git_box').css('display') !== 'none'){
+							$('#git_msg').focus();
+						} else {
+							$('#editor .ace_text-input').focus();
+						}
+					});
+					//console.log(btn);
+					/*switch (String.fromCharCode(event.which).toLowerCase()) {
+						case 's':
+							event.preventDefault();
+							alert('ctrl-s');
+							break;
+						case 'f':
+							event.preventDefault();
+							alert('ctrl-f');
+							break;
+						case 'g':
+							event.preventDefault();
+							alert('ctrl-g');
+							break;
+					}*/
+				}
+			});
 		});

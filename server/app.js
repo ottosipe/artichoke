@@ -26,5 +26,6 @@ app.get('/auth/:id',     router.auth);
 app.get('/edit/:id',   	 router.edit);
 app.get('/:hash/tokbox', router.tokbox);
 app.get('/repos',        router.repos);
+app.get('/githubapi',    router.github_api);
 
 app.post('/email',  router.email );

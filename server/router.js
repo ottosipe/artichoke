@@ -44,12 +44,14 @@ exports.edit = function(req, res){
 
 // repos page
 exports.repos = function(req, res){
+  console.log('reeeeee')
   getReposAndRespond(req, res, "repos");
 };
 
 // redirect the user after github auth
 function getReposAndRespond(req, res, jade_view){
   var client = github.client(req.signedCookies.gh);
+  console.log(req.params.id, req.originalUrl.substr(6, req.originalUrl.length - 6));
   client.get('/user', function (err, status, body) {
     if(err) throw err;
     client.me().repos(function(err, repos) {
@@ -61,10 +63,52 @@ function getReposAndRespond(req, res, jade_view){
       for(i in repos){
         body.repos[i] = repos[i].full_name;
       }
+
+      if(req.params.id) {
+        console.log(req.params.id.replace(/[_]/, '/'));
+        var ghrepo = client.repo(req.params.id.replace(/[_]/, '/'));
+        ghrepo.info(function(err, repo_info){
+          if(err) throw err;
+          console.log(repo_info);
+        });
+        ghrepo.commits(function(err, commit_data){
+          if(err) throw err;
+          console.log(commit_data);
+        });
+      }
       if(jade_view === "repos") res.render(jade_view, { 'github' : body });
       else res.render(jade_view, { 'github' : JSON.stringify(body) });
     });
   });
+};
+
+exports.github_api = function(req, res){
+
+  var ghrepo = client.repo(req.params.id.replace(/[_]/, '/'));
+
+  if(req.body.commits){
+    ghrepo.commits(function(data, err){
+      if(err) throw err;
+    });
+  }
+
+  if(req.body.contributors){
+    ghrepo.contributors(function(data, err){
+      if(err) throw err;
+    });
+  }
+
+  if(req.body.issues){
+    ghrepo.issues(function(data, err){
+      if(err) throw err;
+    });
+  }
+
+  if(req.body.readme){
+    ghrepo.readme(function(data, err){
+      if(err) throw err;
+    });
+  }
 };
 
 // main page
